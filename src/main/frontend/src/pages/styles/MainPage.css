@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'AppleSDGothicNeo';
+  src: url('../../assets/fonts/AppleSDGothicNeoR.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.title{
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-color: rgb(38, 38, 38);
+  color: aliceblue;
+}
+
+body{
+  background-color: dimgray;
+  font-family: 'AppleSDGothicNeo';
+}
+
+.menuButtonDiv{
+  text-align: center;
+}
+
+.menuButton{
+  font-size: 20px;
+  padding: 7px;
+  margin: 10px;
+  background-color: rgb(165, 165, 165);
+  color: aliceblue;
+  border:0;
+  font-weight: bold;
+}
+
+.postBox{
+  padding: 7px;
+  margin: 7px;
+  background-color: aliceblue;
+}
+
+.postTitle{
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 7px;
+}
