@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import './styles/MainPage.css';
 
 interface postDataInterface {
@@ -7,9 +8,17 @@ interface postDataInterface {
   content: string;
 }
 
+const testAPIURL: string = 'http://localhost:8080/testHello';
+
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
   const postCount = useRef<number>(0);
+  async function testAPI(comment: string) {
+    console.log(testAPIURL.concat('?comment=', comment));
+    await axios
+      .get(testAPIURL.concat('?comment=', comment))
+      .then((res) => console.log(res.data));
+  }
   function addPost() {
     postCount.current += 1;
     const postData = { title: '', content: '', key: postCount.current - 1 };
@@ -20,7 +29,9 @@ function MainPage() {
       return [...postList, postData];
     });
   }
-  function removePost() {}
+  function removePost() {
+    testAPI('hi guys~');
+  }
   return (
     <div>
       <h1 className="title">자유 게시판</h1>
