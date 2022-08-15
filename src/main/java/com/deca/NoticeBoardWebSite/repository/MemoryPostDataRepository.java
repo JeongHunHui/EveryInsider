@@ -1,16 +1,21 @@
 package com.deca.NoticeBoardWebSite.repository;
 
 import com.deca.NoticeBoardWebSite.domain.PostData;
+import lombok.Getter;
 
 import java.util.*;
 
 public class MemoryPostDataRepository implements PostDataRepository {
     private static Map<Integer, PostData> store = new HashMap<>();
-    private static Integer num = 0;
+    private static Integer postCount = 0;
+    @Override
+    public Integer getPostCount(){
+        return postCount;
+    }
 
     @Override
     public PostData save(PostData postData) {
-        postData.setPostNum(++num);
+        postData.setPostNum(++postCount);
         store.put(postData.getPostNum(), postData);
         return null;
     }

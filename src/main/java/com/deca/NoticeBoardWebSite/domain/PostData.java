@@ -1,25 +1,16 @@
 package com.deca.NoticeBoardWebSite.domain;
 
+import lombok.*;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class PostData {
+    private Integer postNum;
     private String title;
     private String content;
-    private Integer postNum;
-
-    public String getTitle(){
-        return title;
-    }
-
-    public String getContent(){
-        return content;
-    }
-
-    public Integer getPostNum(){
-        return postNum;
-    }
-
-    public void setPostNum(Integer postNum){
-        this.postNum = postNum;
-    }
 
     public PostData(String title, String content) {
         this.title = title;

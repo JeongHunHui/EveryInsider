@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.b0a20c3a.css",
-    "main.js": "/static/js/main.184a32da.js",
+    "main.js": "/static/js/main.2406ee14.js",
     "static/media/AppleSDGothicNeoR.ttf": "/static/media/AppleSDGothicNeoR.d159b4d4ce2ef2592daa.ttf",
     "index.html": "/index.html",
     "main.b0a20c3a.css.map": "/static/css/main.b0a20c3a.css.map",
-    "main.184a32da.js.map": "/static/js/main.184a32da.js.map"
+    "main.2406ee14.js.map": "/static/js/main.2406ee14.js.map"
   },
   "entrypoints": [
     "static/css/main.b0a20c3a.css",
-    "static/js/main.184a32da.js"
+    "static/js/main.2406ee14.js"
   ]
 }
