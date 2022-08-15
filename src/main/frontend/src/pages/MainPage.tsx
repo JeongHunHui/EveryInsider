@@ -3,9 +3,22 @@ import axios from 'axios';
 import './styles/MainPage.css';
 
 interface postDataInterface {
-  postNum: number;
+  /** 게시물 id, 생성된 순서대로 1부터 증가 */
+  id: number;
+  /** 게시물 제목 */
   title: string;
+  /** 게시물 내용(문자열, 글자제한 있음) */
   content: string;
+  /** 당일이면 시간, 당일이 아니면 년도/월/일 yy/MM/dd|HH:mm */
+  time: string;
+  /** 속해있는 게시판의 종류 BoardType. free, humor, issue, secret */
+  type: string;
+  /** 게시물의 조회수 */
+  viewCount: number;
+  /** 게시물의 좋아요 수 */
+  like: number;
+  /** 게시물의 싫어요 수 */
+  disLike: number;
 }
 
 const getAllPostDataAPIURL: string =
@@ -31,10 +44,10 @@ function MainPage() {
 
   // 새로운 게시물을 생성해 백엔드에 저장한다
   async function savePostData() {
-    const req: postDataInterface = {
-      postNum: 0,
+    const req = {
       title: 'newTitle',
       content: 'empty content',
+      type: 'free',
     };
 
     await axios
@@ -61,9 +74,15 @@ function MainPage() {
       </div>
       <div>
         {postList.map((data: postDataInterface) => (
-          <div key={data.postNum} className="postBox">
-            <div className="postTitle">{data.title}</div>
+          <div key={data.id} className="postBox">
+            <div className="postTitle">
+              {data.id}. {data.title} | {data.type}
+            </div>
             <div>{data.content}</div>
+            <div>
+              조회수: {data.viewCount} | 좋아요:{data.like} | 싫어요:
+              {data.disLike} | 작성 일자: {data.time}
+            </div>
           </div>
         ))}
       </div>

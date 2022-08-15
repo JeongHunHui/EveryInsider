@@ -27,7 +27,6 @@ public class PostDataController {
 
     @PostMapping("/saveData")
     public String savePostData(@RequestBody PostData postData){
-        System.out.println(postData);
         repository.save(postData);
         return "success";
     }

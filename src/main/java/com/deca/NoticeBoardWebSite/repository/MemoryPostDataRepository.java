@@ -1,8 +1,11 @@
 package com.deca.NoticeBoardWebSite.repository;
 
+import com.deca.NoticeBoardWebSite.domain.BoardData;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class MemoryPostDataRepository implements PostDataRepository {
@@ -14,14 +17,25 @@ public class MemoryPostDataRepository implements PostDataRepository {
     }
 
     @Override
-    public PostData save(PostData postData) {
-        postData.setPostNum(++postCount);
-        store.put(postData.getPostNum(), postData);
-        return null;
+    public void save(PostData postData) {
+        postData.setId(++postCount);
+        SimpleDateFormat date = new SimpleDateFormat("yy/MM/dd|HH:mm");
+        String timeStamp = date.format(new Date());
+        postData.setTime(timeStamp);
+
+        BoardData boardData = new BoardData();
+        String name = boardData.getBoardNameByKey(postData.getType());
+        if(name != "null"){
+            postData.setType(name);
+        }
+        else System.out.println(postData.getType() + ": doesn't exist");
+
+        store.put(postData.getId(), postData);
+        System.out.println(Optional.ofNullable(store.get(postData.getId())));
     }
 
     @Override
-    public Optional<PostData> findByNum(Integer postNum) {
+    public Optional<PostData> findById(Integer postNum) {
         return Optional.ofNullable(store.get(postNum));
     }
 

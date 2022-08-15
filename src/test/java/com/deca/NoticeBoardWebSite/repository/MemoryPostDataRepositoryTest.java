@@ -14,41 +14,40 @@ class MemoryPostDataRepositoryTest {
     // 각 테스트 종료마다 실행
     @AfterEach
     public void afterEach(){
-        System.out.println("clear store");
         // store 에 저장된 내용 초기화
         repository.clearStore();
+        System.out.println("----- clear store -----");
     }
 
     @Test
     public void save(){
-        PostData postData1 = new PostData("testTitle", "testContent");
-        repository.save(postData1);
-        PostData result1 = repository.findByNum(postData1.getPostNum()).get();
-        System.out.println("result1 = " + (result1 == postData1));
-        Assertions.assertEquals(result1, postData1);
+        PostData postData = new PostData();
+        repository.save(postData);
+        PostData result = repository.findById(postData.getId()).get();
+        System.out.println("time stamp: " + result.getTime());
+        System.out.println("save test result = " + (result == postData));
+        Assertions.assertEquals(result, postData);
     }
 
     @Test
     public void findByTitle(){
-        PostData postData = new PostData("testTitle1", "testContent");
+        PostData postData = new PostData("testTitle1", "empty", "issue");
         repository.save(postData);
-        PostData postData2 = new PostData("testTitle2", "testContent");
-        repository.save(postData2);
 
-        PostData result2 = repository.findByTitle("testTitle2").get();
-        System.out.println("result2 = " + (result2 == postData2));
-        Assertions.assertEquals(result2, postData2);
+        PostData result = repository.findByTitle("testTitle1").get();
+        System.out.println("result = " + (result == postData));
+        Assertions.assertEquals(result, postData);
     }
 
     @Test
     public void findAll(){
-        PostData postData = new PostData("testTitle", "testContent");
-        repository.save(postData);
-        PostData postData2 = new PostData("testTitle", "testContent");
+        PostData postData1 = new PostData();
+        repository.save(postData1);
+        PostData postData2 = new PostData();
         repository.save(postData2);
         List<PostData> result = repository.findAll();
         for (PostData data: result) {
-            System.out.println(data.getPostNum());
+            System.out.println(data.getId());
         }
     }
 }
