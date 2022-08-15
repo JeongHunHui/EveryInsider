@@ -21,9 +21,8 @@ public class PostData {
         this.postNum = postNum;
     }
 
-    public PostData(String title, String content, Integer postNum) {
+    public PostData(String title, String content) {
         this.title = title;
         this.content = content;
-        this.postNum = postNum;
     }
 }

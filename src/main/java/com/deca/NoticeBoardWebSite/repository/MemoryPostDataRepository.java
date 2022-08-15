@@ -33,4 +33,8 @@ public class MemoryPostDataRepository implements PostDataRepository {
     public List<PostData> findAll() {
         return new ArrayList<>(store.values());
     }
+
+    public void clearStore(){
+        store.clear();
+    }
 }
