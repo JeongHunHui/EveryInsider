@@ -10,6 +10,5 @@ public interface PostDataRepository {
     Optional<PostData> findById(Integer postNum); // 번호로 게시물 찾기
     Optional<PostData> findByTitle(String title); // 제목으로 게시물 찾기
     List<PostData> findAll(); // 전체 게시물 불러오기
-    Integer getPostCount();
     void clearStore();
 }

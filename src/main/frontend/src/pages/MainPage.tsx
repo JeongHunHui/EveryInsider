@@ -21,18 +21,16 @@ interface postDataInterface {
   disLike: number;
 }
 
-const getAllPostDataAPIURL: string =
-  'http://localhost:8080/api/postData/getAll';
+const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
 
-const savePostDataAPIURL: string =
-  'http://localhost:8080/api/postData/saveData';
+const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
 
   // 게시물들을 백엔드에서 불러와서 랜더링한다
   async function loadPosts() {
-    await axios.get(getAllPostDataAPIURL).then((res) => {
+    await axios.get(getAllPostDataURL).then((res) => {
       console.log(res.data);
       setPostList(res.data);
     });
@@ -51,7 +49,7 @@ function MainPage() {
     };
 
     await axios
-      .post(savePostDataAPIURL, req)
+      .post(uploadPostURL, req)
       .then((res) => {
         console.log(res.data);
         // 게시물을 백엔드에 저장한 뒤 랜더링
