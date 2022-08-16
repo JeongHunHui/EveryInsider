@@ -1,8 +1,10 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './styles/MainPage.css';
+import PostBox from '../components/PostBox';
 
-interface postDataInterface {
+export interface postDataInterface {
   /** 게시물 id, 생성된 순서대로 1부터 증가 */
   id: number;
   /** 게시물 제목 */
@@ -22,7 +24,6 @@ interface postDataInterface {
 }
 
 const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
-
 const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 
 function MainPage() {
@@ -71,18 +72,29 @@ function MainPage() {
         </button>
       </div>
       <div>
-        {postList.map((data: postDataInterface) => (
-          <div key={data.id} className="postBox">
-            <div className="postTitle">
-              {data.id}. {data.title} | {data.type}
-            </div>
-            <div>{data.content}</div>
-            <div>
-              조회수: {data.viewCount} | 좋아요:{data.like} | 싫어요:
-              {data.disLike} | 작성 일자: {data.time}
-            </div>
-          </div>
-        ))}
+        {postList.map(
+          ({
+            id,
+            title,
+            content,
+            time,
+            type,
+            viewCount,
+            like,
+            disLike,
+          }: postDataInterface) => (
+            <PostBox
+              id={id}
+              title={title}
+              content={content}
+              time={time}
+              type={type}
+              viewCount={viewCount}
+              like={like}
+              disLike={disLike}
+            />
+          )
+        )}
       </div>
     </div>
   );

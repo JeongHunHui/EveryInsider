@@ -27,7 +27,9 @@ public class MemoryPostDataRepository implements PostDataRepository {
 
     @Override
     public List<PostData> findAll() {
-        return new ArrayList<>(store.values());
+        List<PostData> list = new ArrayList<>(store.values());
+        Collections.reverse(list);
+        return list;
     }
 
     @Override
