@@ -1,35 +1,41 @@
 package com.deca.NoticeBoardWebSite.controller;
 
 import com.deca.NoticeBoardWebSite.domain.PostData;
-import com.deca.NoticeBoardWebSite.repository.MemoryPostDataRepository;
-import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // controller 임을 알려주는 표시 + ㄱResponseBody
+@RestController // 스프링 컨테이너에 controller 임을 알려주는 표시
+                // + ResponseBody 기능
 @RequestMapping(value = "/api/postData")
+//
 public class PostDataController {
-    PostDataRepository repository = new MemoryPostDataRepository();
-    PostDataService service = new PostDataService();
+    private final PostDataService postDataService;
+
+    @Autowired
+    // Autowired: 의존성 부여
+    // 스프링 컨테이너에서 postDataService 가져옴
+    // -> postDataService 도 컨테이너에 등록이 되어있어야함
+    public PostDataController(PostDataService postDataService){
+        this.postDataService = postDataService;
+    }
 
     @GetMapping("/getAll")
     public List<PostData> getAllPostData(){
-        List<PostData> postDataArray = repository.findAll();
+        List<PostData> postDataArray = postDataService.findAll();
         return postDataArray;
     }
 
     @GetMapping("/getCount")
     public Integer getPostCount(){
-        return service.getPostCount();
+        return postDataService.getPostCount();
     }
 
     @PostMapping("/upload")
     public String savePostData(@RequestBody PostData postData){
-        service.uploadPost(postData);
+        postDataService.uploadPost(postData);
         return "success";
     }
 }
