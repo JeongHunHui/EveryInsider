@@ -17,7 +17,11 @@ function WritePage() {
             <option value="secret">비밀게시판</option>
           </select>
         </form>
-        <input className="title-input" type="text" placeholder="제목" />
+        <input
+          className="title-input"
+          type="text"
+          placeholder="제목을 입력하세요"
+        />
       </div>
       <CKEditor
         editor={ClassicEditor}

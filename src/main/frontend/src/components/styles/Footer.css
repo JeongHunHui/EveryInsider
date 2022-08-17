@@ -1,0 +1,13 @@
+footer{
+  margin-top: auto;
+  text-align: center;
+  padding: 10px;
+  font-size: 15px;
+  background-color: rgb(38, 38, 38);
+  color: rgb(180, 180, 180);
+}
+
+footer > div > a{
+  text-decoration-line: none;
+  color: pink;
+}

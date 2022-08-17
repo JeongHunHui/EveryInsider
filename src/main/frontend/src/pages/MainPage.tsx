@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles/MainPage.css';
 import PostBox from '../components/PostBox';
@@ -24,7 +25,7 @@ export interface postDataInterface {
 }
 
 const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
-const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
+// const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
@@ -41,35 +42,34 @@ function MainPage() {
     loadPosts();
   }, []);
 
-  // 새로운 게시물을 생성해 백엔드에 저장한다
-  async function savePostData() {
-    const req = {
-      title: 'newTitle',
-      content: 'empty content',
-      type: 'free',
-    };
+  // // 새로운 게시물을 생성해 백엔드에 저장한다
+  // async function savePostData() {
+  //   const req = {
+  //     title: 'newTitle',
+  //     content: 'empty content',
+  //     type: 'free',
+  //   };
 
-    await axios
-      .post(uploadPostURL, req)
-      .then((res) => {
-        console.log(res.data);
-        // 게시물을 백엔드에 저장한 뒤 랜더링
-        loadPosts();
-      })
-      .catch((error) => console.log(error));
-  }
+  //   await axios
+  //     .post(uploadPostURL, req)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       // 게시물을 백엔드에 저장한 뒤 랜더링
+  //       loadPosts();
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
 
-  function addPost() {
-    savePostData();
-  }
+  // function addPost() {
+  //   savePostData();
+  // }
 
   return (
     <div>
-      <h1 className="title">자유 게시판</h1>
       <div className="menuButtonDiv">
-        <button className="menuButton" type="button" onClick={addPost}>
+        <Link className="menuButton" to="/writePage">
           글쓰기
-        </button>
+        </Link>
       </div>
       <div>
         {postList.map(

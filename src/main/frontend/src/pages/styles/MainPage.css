@@ -5,21 +5,18 @@
   font-style: normal;
 }
 
-.title{
-  text-align: center;
-  margin: 0;
-  padding: 20px;
-  background-color: rgb(38, 38, 38);
-  color: aliceblue;
+body{
+  background-color: rgb(180, 180, 180);
+  font-family: 'AppleSDGothicNeo';
 }
 
-body{
-  background-color: dimgray;
-  font-family: 'AppleSDGothicNeo';
+a{
+  text-decoration-line: none;
 }
 
 .menuButtonDiv{
   text-align: center;
+  margin-top: 10px;
 }
 
 .menuButton{

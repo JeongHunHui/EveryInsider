@@ -1,0 +1,11 @@
+.title{
+  text-align: center;
+  padding: 20px;
+  margin: 0px;
+  background-color: rgb(38, 38, 38);
+}
+
+.titleLink{
+  text-decoration-line: none;
+  color: aliceblue;
+}
