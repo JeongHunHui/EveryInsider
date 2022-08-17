@@ -4,12 +4,15 @@
   left: 0;
   right: 0;
   text-align: center;
-  padding: 20px;
   margin: 0px;
-  background-color: rgb(38, 38, 38);
+  height: 80px;
+  background-color: #CF5260;
 }
 
 .titleLink{
-  text-decoration-line: none;
-  color: aliceblue;
+  height: 0;
+}
+
+.logo{
+  height: 100%;
 }

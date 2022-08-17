@@ -1,14 +1,15 @@
 import React from 'react';
 import './styles/Header.css';
+import logo from '../assets/images/logo.png';
 
 function Header() {
   return (
     <header>
-      <h1 className="title">
+      <div className="title">
         <a className="titleLink" href="/">
-          EveryInsider
+          <img className="logo" src={logo} alt="logo" />
         </a>
-      </h1>
+      </div>
     </header>
   );
 }

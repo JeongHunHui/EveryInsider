@@ -3,11 +3,12 @@ footer{
   text-align: center;
   padding: 10px;
   font-size: 15px;
-  background-color: rgb(38, 38, 38);
-  color: rgb(180, 180, 180);
+  background-color: #CF5260;
+  color: aliceblue;
 }
 
 footer > div > a{
   text-decoration-line: none;
-  color: pink;
+  color: aliceblue;
+  font-weight: bold;
 }
