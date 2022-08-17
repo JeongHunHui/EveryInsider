@@ -1,0 +1,35 @@
+.editorDiv{
+  margin: 30px;
+  text-align: center;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable){
+  min-height: 300px;
+}
+
+.title-input{
+  border:none;
+  width: 70%;
+  font-size: 15px;
+  padding-left: 10px;
+}
+
+.setInfoDiv{
+  display: flex;
+  height: 30px;
+  border: 1px solid #c4c4c4;
+  border-radius: 1.5px 1.5px 0px 0px;
+  margin-bottom: -1px;
+}
+
+.boardTypeComboBox{
+  width: 30%;
+  height: 100%;
+}
+.boardTypeComboBox > select{
+  background-color: rgb(38, 38, 38);
+  color: aliceblue;
+  border:none;
+  width: 100%;
+  height: 100%;
+}
