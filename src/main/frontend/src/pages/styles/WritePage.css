@@ -26,9 +26,14 @@
   width: 30%;
   height: 100%;
 }
+
 .boardTypeComboBox > select{
   border: none;
   border-right: 1px solid #c4c4c4;
   width: 100%;
   height: 100%;
+}
+
+.test{
+  text-align: left;
 }
