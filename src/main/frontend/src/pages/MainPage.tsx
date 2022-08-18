@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles/MainPage.css';
 import PostBox from '../components/PostBox';
@@ -26,10 +26,12 @@ export interface postDataInterface {
 }
 
 const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
-// const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getAll';
+const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
+  const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
+  const param = useParams();
 
   const defaultData: postDataInterface = {
     id: 0,
@@ -56,61 +58,66 @@ function MainPage() {
       });
   }
 
-  /*
   // 게시판 type을 백엔드에서 불러와서 랜더링한다
   async function getBoardType() {
     await axios
       .get(getBoardTypeURL)
       .then((res) => {
-        console.log(res.data);
-        setPostList(res.data);
+        console.log(Object.entries(res.data));
+        setTypeKeyValues(Object.entries(res.data));
       })
       .catch((error) => {
         console.log(error);
-        setPostList([defaultData, defaultData]);
+        setTypeKeyValues([
+          ['free', '자유'],
+          ['humor', '유머'],
+          ['issue', '이슈'],
+          ['secret', '비밀'],
+        ]);
       });
   }
-  */
 
   useEffect(() => {
+    console.log(param.type);
+    getBoardType();
     loadPosts();
-  }, []);
+  }, [param.type]);
 
   return (
     <div>
       <div className="menuDiv">
-        <nav className="navList">
-          <ul>
-            <NavBar />
-          </ul>
-        </nav>
+        {typeKeyValues ? <NavBar typeKeyValues={typeKeyValues} /> : <div />}
         <Link className="writeButton" to="/writePage">
           글쓰기
         </Link>
       </div>
       <div>
-        {postList.map(
-          ({
-            id,
-            title,
-            content,
-            time,
-            type,
-            viewCount,
-            like,
-            disLike,
-          }: postDataInterface) => (
-            <PostBox
-              id={id}
-              title={title}
-              content={content}
-              time={time}
-              type={type}
-              viewCount={viewCount}
-              like={like}
-              disLike={disLike}
-            />
+        {postList ? (
+          postList.map(
+            ({
+              id,
+              title,
+              content,
+              time,
+              type,
+              viewCount,
+              like,
+              disLike,
+            }: postDataInterface) => (
+              <PostBox
+                id={id}
+                title={title}
+                content={content}
+                time={time}
+                type={type}
+                viewCount={viewCount}
+                like={like}
+                disLike={disLike}
+              />
+            )
           )
+        ) : (
+          <div />
         )}
       </div>
     </div>

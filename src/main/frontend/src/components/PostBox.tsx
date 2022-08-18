@@ -14,7 +14,7 @@ function PostBox({
   time,
 }: postDataInterface) {
   return (
-    <Link to={`postPage/${id}`}>
+    <Link to={`/postPage/${id}`}>
       <div key={id} className="postBox">
         <div className="postTitle">
           {id}. {title} | {type}

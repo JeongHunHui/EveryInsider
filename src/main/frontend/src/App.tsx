@@ -15,6 +15,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainPage />} />
+            <Route path="/:type" element={<MainPage />} />
             <Route path="/writePage" element={<WritePage />} />
             <Route path="/postPage/:id" element={<PostPage />} />
           </Routes>
