@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './styles/WritePage.css';
@@ -6,20 +6,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
+const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
 
 function WritePage() {
   const navigate = useNavigate();
   const postTitle = useRef('');
   const postContent = useRef('');
   const [boardType, setBoardType] = useState('free');
-
-  // 나중에 백엔드에서 불러와서 하기
-  const typeList = [
-    { type: 'free', name: '자유게시판' },
-    { type: 'humor', name: '유머게시판' },
-    { type: 'issue', name: '이슈게시판' },
-    { type: 'secret', name: '비밀게시판' },
-  ];
+  const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
 
   // 작성한 게시물을 백엔드에 저장하고 메인페이지로 이동
   async function savePostData() {
@@ -39,6 +33,20 @@ function WritePage() {
       .catch((error) => console.log(error));
   }
 
+  // 게시판 type을 백엔드에서 불러온다
+  async function getBoardType() {
+    await axios
+      .get(getBoardTypeURL)
+      .then((res) => {
+        console.log(res.data);
+        setTypeKeyValues(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setTypeKeyValues([['test', '테스트']]);
+      });
+  }
+
   function uploadPost() {
     savePostData();
   }
@@ -51,16 +59,24 @@ function WritePage() {
     setBoardType(e.target.value);
   }
 
+  useEffect(() => {
+    getBoardType();
+  }, []);
+
   return (
     <div className="editorDiv">
       <div className="setInfoDiv">
         <form className="boardTypeComboBox">
           <select name="boardType" onChange={typeChange} value={boardType}>
-            {typeList.map(({ type, name }) => (
-              <option value={type} key={type}>
-                {name}
-              </option>
-            ))}
+            {typeKeyValues ? (
+              typeKeyValues.map((keyValues: string[]) => (
+                <option value={keyValues[0]} key={keyValues[0]}>
+                  {keyValues[1]}게시판
+                </option>
+              ))
+            ) : (
+              <div />
+            )}
           </select>
         </form>
         <input
