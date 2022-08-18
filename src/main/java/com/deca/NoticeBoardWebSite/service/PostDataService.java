@@ -28,7 +28,7 @@ public class PostDataService {
         return boardData.getBoardNameByKey(type);
     }
 
-    public Map<String, String> getTypeKeyValues(){
+    public List<String[]> getTypeKeyValues(){
         return boardData.getTypeKeyValues();
     }
 

@@ -20,12 +20,15 @@ public class BoardData {
     }
 
     // 게시판 타입을 키벨류 형식으로 반환
-    public Map<String, String> getTypeKeyValues(){
-        Map<String, String> keyValues = new HashMap<>();
+    public List<String[]> getTypeKeyValues(){
+        // Map<String, String> keyValues = new HashMap<>();
+        List<String[]> keyValues = new ArrayList<>();
         if(keys.length != values.length)
             throw new IllegalStateException("keys, values 값이 잘못되었습니다.");
+
+
         for(int i = 0; i < keys.length; i++){
-            keyValues.put(keys[i], values[i]);
+            keyValues.add(new String[]{keys[i], values[i]});
         }
         return keyValues;
     }

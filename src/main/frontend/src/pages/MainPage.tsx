@@ -63,8 +63,8 @@ function MainPage() {
     await axios
       .get(getBoardTypeURL)
       .then((res) => {
-        console.log(Object.entries(res.data));
-        setTypeKeyValues(Object.entries(res.data));
+        console.log(res.data);
+        setTypeKeyValues(res.data);
       })
       .catch((error) => {
         console.log(error);

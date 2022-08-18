@@ -43,7 +43,7 @@ public class PostDataController {
     }
 
     @GetMapping("/getTypes")
-    public Map<String, String> getTypeKeyValues(){
+    public List<String[]> getTypeKeyValues(){
         return postDataService.getTypeKeyValues();
     }
 
