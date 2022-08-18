@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController // 스프링 컨테이너에 controller 임을 알려주는 표시
@@ -31,10 +32,16 @@ public class PostDataController {
     }
 
     @GetMapping("/getDataById")
-    public PostData getPostDataById(@RequestParam(value="id", required=false, defaultValue="0") Integer id){
+    public PostData getPostDataById(@RequestParam(value="id", defaultValue="0") Integer id){
         Optional<PostData> postData = postDataService.findById(id);
         if(postData.isPresent()) return postData.get();
         throw new IllegalStateException("잘못된 id 값입니다.");
+    }
+
+    @GetMapping("/getDataByType")
+    public List<PostData> getPostDataByType(@RequestParam(value="type") String type){
+        List<PostData> postDataList = postDataService.findByType(type);
+        return postDataList;
     }
 
     @GetMapping("/getCount")

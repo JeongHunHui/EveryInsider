@@ -27,6 +27,8 @@ export interface postDataInterface {
 
 const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
+const getPostByTypeURL: string =
+  'http://localhost:8080/api/postData/getDataByType';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
@@ -58,7 +60,21 @@ function MainPage() {
       });
   }
 
-  // 게시판 type을 백엔드에서 불러와서 랜더링한다
+  // 게시물들을 백엔드에서 불러와서 랜더링한다
+  async function loadPostsByType() {
+    await axios
+      .get(getPostByTypeURL.concat(`?type=${param.type}`))
+      .then((res) => {
+        console.log(res.data);
+        setPostList(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setPostList([defaultData, defaultData]);
+      });
+  }
+
+  // 게시판 type을 백엔드에서 불러온다
   async function getBoardType() {
     await axios
       .get(getBoardTypeURL)
@@ -68,19 +84,18 @@ function MainPage() {
       })
       .catch((error) => {
         console.log(error);
-        setTypeKeyValues([
-          ['free', '자유'],
-          ['humor', '유머'],
-          ['issue', '이슈'],
-          ['secret', '비밀'],
-        ]);
+        setTypeKeyValues([['', '테스트']]);
       });
   }
 
   useEffect(() => {
-    console.log(param.type);
     getBoardType();
-    loadPosts();
+    console.log(param.type);
+    if (param.type === undefined) {
+      loadPosts();
+    } else {
+      loadPostsByType();
+    }
   }, [param.type]);
 
   return (
@@ -92,7 +107,7 @@ function MainPage() {
         </Link>
       </div>
       <div>
-        {postList ? (
+        {postList.length !== 0 ? (
           postList.map(
             ({
               id,
@@ -117,7 +132,18 @@ function MainPage() {
             )
           )
         ) : (
-          <div />
+          <div>
+            <PostBox
+              id={0}
+              title=""
+              content=""
+              time=""
+              type=""
+              viewCount={0}
+              like={0}
+              disLike={0}
+            />
+          </div>
         )}
       </div>
     </div>

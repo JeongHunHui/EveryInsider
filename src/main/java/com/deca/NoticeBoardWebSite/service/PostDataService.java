@@ -53,4 +53,8 @@ public class PostDataService {
     public Optional<PostData> findById(Integer id){
         return postDataRepository.findById(id);
     }
+    public List<PostData> findByType(String type){
+        return postDataRepository.findByType(getBoardName(type));
+    }
+
 }

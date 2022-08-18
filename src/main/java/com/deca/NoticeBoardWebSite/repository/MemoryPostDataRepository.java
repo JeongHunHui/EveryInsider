@@ -3,6 +3,7 @@ package com.deca.NoticeBoardWebSite.repository;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 // 스프링 컨테이너에 Repository 로 등록
 public class MemoryPostDataRepository implements PostDataRepository {
@@ -39,7 +40,7 @@ public class MemoryPostDataRepository implements PostDataRepository {
 
     @Override
     public List<PostData> findByType(String type) {
-        List<PostData> list = new ArrayList<>(store.values());
+        List<PostData> list = store.values().stream().filter(data->data.getType() == type).collect(Collectors.toList());
         Collections.reverse(list);
         return list;
     }
