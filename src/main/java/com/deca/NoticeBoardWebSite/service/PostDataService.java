@@ -7,6 +7,7 @@ import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 // 스프링 컨테이너에 PostDataService 를 Service 로 등록한다
@@ -16,14 +17,19 @@ public class PostDataService {
         this.postDataRepository = postDataRepository;
     }
 
+    private final BoardData boardData = new BoardData();
+
     private static Integer postCount = 0;
     public Integer getPostCount(){
         return postCount;
     }
 
     private String getBoardName(String type){
-        BoardData boardData = new BoardData();
         return boardData.getBoardNameByKey(type);
+    }
+
+    public Map<String, String> getTypeKeyValues(){
+        return boardData.getTypeKeyValues();
     }
 
     private String getTimeStamp(){

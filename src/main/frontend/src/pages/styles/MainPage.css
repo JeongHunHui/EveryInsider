@@ -6,7 +6,7 @@
 }
 
 body{
-  background-color: aliceblue;
+  background-color: rgb(239, 239, 239);
   font-family: 'AppleSDGothicNeo';
 }
 
@@ -14,20 +14,30 @@ a{
   text-decoration-line: none;
 }
 
-.menuButtonDiv{
+.menuDiv{
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.menuButton{
-  font-size: 20px;
+.writeButton{
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  background-color: white;
   padding: 7px;
   margin: 10px;
-  background-color: rgb(165, 165, 165);
-  color: aliceblue;
-  border:0;
+}
+
+.navList{
+  font-size: 15px;
   font-weight: bold;
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  background-color: white;
+  padding: 7px;
+  margin: 10px;
 }
 
 .postTitle{

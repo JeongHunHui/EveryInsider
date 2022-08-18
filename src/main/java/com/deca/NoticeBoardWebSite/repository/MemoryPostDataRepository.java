@@ -36,4 +36,11 @@ public class MemoryPostDataRepository implements PostDataRepository {
     public void clearStore(){
         store.clear();
     }
+
+    @Override
+    public List<PostData> findByType(String type) {
+        List<PostData> list = new ArrayList<>(store.values());
+        Collections.reverse(list);
+        return list;
+    }
 }

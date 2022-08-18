@@ -4,11 +4,11 @@ footer{
   padding: 10px;
   font-size: 15px;
   background-color: #CF5260;
-  color: aliceblue;
+  color: white;
 }
 
 footer > div > a{
   text-decoration-line: none;
-  color: aliceblue;
+  color: white;
   font-weight: bold;
 }

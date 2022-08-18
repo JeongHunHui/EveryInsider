@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController // 스프링 컨테이너에 controller 임을 알려주는 표시
@@ -39,6 +40,11 @@ public class PostDataController {
     @GetMapping("/getCount")
     public Integer getPostCount(){
         return postDataService.getPostCount();
+    }
+
+    @GetMapping("/getTypes")
+    public Map<String, String> getTypeKeyValues(){
+        return postDataService.getTypeKeyValues();
     }
 
     @PostMapping("/upload")

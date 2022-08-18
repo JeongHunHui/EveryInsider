@@ -10,7 +10,9 @@ const getPostDataURL: string = 'http://localhost:8080/api/postData/getDataById';
 function PostPage() {
   const [data, setData] = useState<postDataInterface>();
   const { id } = useParams();
-  /* const defaultData: postDataInterface = {
+
+  // 테스트용
+  const defaultData: postDataInterface = {
     id: 0,
     title: 'title',
     type: 'free',
@@ -19,7 +21,8 @@ function PostPage() {
     like: 0,
     disLike: 0,
     time: 'currentTime',
-  }; */
+  };
+
   async function getDataById() {
     await axios(getPostDataURL.concat(`?id=${id}`))
       .then((res) => setData(res.data))
@@ -41,11 +44,8 @@ function PostPage() {
       </div>
     </div>
   ) : (
-    <div>로딩중...</div>
-  );
-}
-/*
-<div className="postBox">
+    // 테스트용
+    <div className="postBox">
       <div className="postTitle">
         {defaultData?.id}. {defaultData?.title} | {defaultData?.type}
       </div>
@@ -55,6 +55,7 @@ function PostPage() {
         {defaultData?.disLike} | 작성 일자: {defaultData?.time}
       </div>
     </div>
-*/
+  );
+}
 
 export default PostPage;

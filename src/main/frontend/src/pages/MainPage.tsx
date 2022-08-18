@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles/MainPage.css';
 import PostBox from '../components/PostBox';
+import NavBar from '../components/NavBar';
 
 export interface postDataInterface {
   /** 게시물 id, 생성된 순서대로 1부터 증가 */
@@ -25,6 +26,7 @@ export interface postDataInterface {
 }
 
 const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
+// const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getAll';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
@@ -54,14 +56,35 @@ function MainPage() {
       });
   }
 
+  /*
+  // 게시판 type을 백엔드에서 불러와서 랜더링한다
+  async function getBoardType() {
+    await axios
+      .get(getBoardTypeURL)
+      .then((res) => {
+        console.log(res.data);
+        setPostList(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setPostList([defaultData, defaultData]);
+      });
+  }
+  */
+
   useEffect(() => {
     loadPosts();
   }, []);
 
   return (
     <div>
-      <div className="menuButtonDiv">
-        <Link className="menuButton" to="/writePage">
+      <div className="menuDiv">
+        <nav className="navList">
+          <ul>
+            <NavBar />
+          </ul>
+        </nav>
+        <Link className="writeButton" to="/writePage">
           글쓰기
         </Link>
       </div>
