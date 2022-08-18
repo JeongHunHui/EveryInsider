@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import WritePage from './pages/WritePage';
+import PostPage from './pages/PostPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './styles/App.css';
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/writePage" element={<WritePage />} />
+            <Route path="/postPage/:id" element={<PostPage />} />
           </Routes>
         </BrowserRouter>
       </div>

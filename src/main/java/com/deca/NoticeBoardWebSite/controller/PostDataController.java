@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController // 스프링 컨테이너에 controller 임을 알려주는 표시
                 // + ResponseBody 기능
@@ -26,6 +27,13 @@ public class PostDataController {
     public List<PostData> getAllPostData(){
         List<PostData> postDataArray = postDataService.findAll();
         return postDataArray;
+    }
+
+    @GetMapping("/getDataById")
+    public PostData getPostDataById(@RequestParam(value="id", required=false, defaultValue="0") Integer id){
+        Optional<PostData> postData = postDataService.findById(id);
+        if(postData.isPresent()) return postData.get();
+        throw new IllegalStateException("잘못된 id 값입니다.");
     }
 
     @GetMapping("/getCount")

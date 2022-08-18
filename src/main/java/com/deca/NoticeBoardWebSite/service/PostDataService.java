@@ -7,6 +7,7 @@ import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 // 스프링 컨테이너에 PostDataService 를 Service 로 등록한다
 public class PostDataService {
@@ -42,5 +43,8 @@ public class PostDataService {
 
     public List<PostData> findAll(){
         return postDataRepository.findAll();
+    }
+    public Optional<PostData> findById(Integer id){
+        return postDataRepository.findById(id);
     }
 }

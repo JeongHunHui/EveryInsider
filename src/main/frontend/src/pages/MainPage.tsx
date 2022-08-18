@@ -25,44 +25,38 @@ export interface postDataInterface {
 }
 
 const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
-// const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
 
+  const defaultData: postDataInterface = {
+    id: 0,
+    title: 'title',
+    type: 'free',
+    content: 'content',
+    viewCount: 0,
+    like: 0,
+    disLike: 0,
+    time: 'currentTime',
+  };
+
   // 게시물들을 백엔드에서 불러와서 랜더링한다
   async function loadPosts() {
-    await axios.get(getAllPostDataURL).then((res) => {
-      console.log(res.data);
-      setPostList(res.data);
-    });
+    await axios
+      .get(getAllPostDataURL)
+      .then((res) => {
+        console.log(res.data);
+        setPostList(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setPostList([defaultData, defaultData]);
+      });
   }
 
   useEffect(() => {
     loadPosts();
   }, []);
-
-  // // 새로운 게시물을 생성해 백엔드에 저장한다
-  // async function savePostData() {
-  //   const req = {
-  //     title: 'newTitle',
-  //     content: 'empty content',
-  //     type: 'free',
-  //   };
-
-  //   await axios
-  //     .post(uploadPostURL, req)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       // 게시물을 백엔드에 저장한 뒤 랜더링
-  //       loadPosts();
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-
-  // function addPost() {
-  //   savePostData();
-  // }
 
   return (
     <div>

@@ -17,6 +17,7 @@ a{
 .menuButtonDiv{
   text-align: center;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .menuButton{
@@ -27,12 +28,6 @@ a{
   color: aliceblue;
   border:0;
   font-weight: bold;
-}
-
-.postBox{
-  padding: 7px;
-  margin: 7px;
-  background-color: aliceblue;
 }
 
 .postTitle{

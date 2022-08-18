@@ -1,0 +1,12 @@
+.postBox{
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  background-color: aliceblue;
+  padding: 7px;
+  margin: 7px;
+}
+
+a{
+  text-decoration-line: none;
+  color: black;
+}
