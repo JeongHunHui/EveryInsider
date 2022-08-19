@@ -11,13 +11,13 @@ function NavBar({ typeKeyValues }: any) {
   return array ? (
     <nav className="navList">
       <ul>
-        <NavLink to="/">
-          <li className="navBar_first">전체</li>
-        </NavLink>
+        <li className="navBar_first">
+          <NavLink to="/">전체</NavLink>
+        </li>
         {array.map((data: string[]) => (
-          <NavLink to={`/${data[0]}`}>
-            <li className="navBar">{data[1]}</li>
-          </NavLink>
+          <li className="navBar" key={data[0]}>
+            <NavLink to={`/${data[0]}`}>{data[1]}</NavLink>
+          </li>
         ))}
       </ul>
     </nav>

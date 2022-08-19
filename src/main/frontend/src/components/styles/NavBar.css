@@ -17,6 +17,10 @@ ul{
   margin: 0px;
 }
 
+li a.active{
+  color: #CF5260;
+}
+
 .navList{
   font-size: 15px;
   font-weight: bold;
