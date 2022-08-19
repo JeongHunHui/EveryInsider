@@ -53,6 +53,10 @@
   background-color: white;
 }
 
+.saveButtonDiv > button:hover{
+  color: #CF5260;
+}
+
 .saveButtonDiv > button > img{
   vertical-align: middle;
   height: 14px;

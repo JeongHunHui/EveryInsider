@@ -40,7 +40,6 @@ function WritePage() {
     await axios
       .get(getBoardTypeURL)
       .then((res) => {
-        console.log(res.data);
         setTypeKeyValues(res.data);
       })
       .catch((error) => {
@@ -77,7 +76,7 @@ function WritePage() {
                 </option>
               ))
             ) : (
-              <div />
+              <option>불러오기 실패</option>
             )}
           </select>
         </form>

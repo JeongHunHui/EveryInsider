@@ -14,6 +14,10 @@ a{
   text-decoration-line: none;
 }
 
+a:hover{
+  color: #CF5260;
+}
+
 .menuDiv{
   text-align: center;
   margin-top: 10px;
@@ -35,7 +39,7 @@ a{
 }
 
 .writeIcon{
-  height: 20px;
+  height: 18px;
   margin-right: 3px;
 }
 

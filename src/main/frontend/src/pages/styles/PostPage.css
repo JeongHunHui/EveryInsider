@@ -40,6 +40,10 @@
   background-color: white;
 }
 
+.postMenuBox > button:hover{
+  color: #CF5260;
+}
+
 .postMenuBox > button > img{
   height: 10px;
   margin-right: 4px;

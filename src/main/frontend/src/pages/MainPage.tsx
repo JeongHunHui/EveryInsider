@@ -52,7 +52,6 @@ function MainPage() {
     await axios
       .get(getAllPostDataURL)
       .then((res) => {
-        console.log(res.data);
         setPostList(res.data);
       })
       .catch((error) => {
@@ -66,7 +65,6 @@ function MainPage() {
     await axios
       .get(getPostByTypeURL.concat(`?type=${param.type}`))
       .then((res) => {
-        console.log(res.data);
         setPostList(res.data);
       })
       .catch((error) => {
@@ -80,7 +78,6 @@ function MainPage() {
     await axios
       .get(getBoardTypeURL)
       .then((res) => {
-        console.log(res.data);
         setTypeKeyValues(res.data);
       })
       .catch((error) => {
@@ -91,7 +88,6 @@ function MainPage() {
 
   useEffect(() => {
     getBoardType();
-    console.log(param.type);
     if (param.type === undefined) {
       loadPosts();
     } else {
@@ -122,6 +118,7 @@ function MainPage() {
               disLike,
             }: postDataInterface) => (
               <PostBox
+                key={id}
                 id={id}
                 title={title}
                 content={content}
@@ -136,6 +133,7 @@ function MainPage() {
         ) : (
           <div>
             <PostBox
+              key={0}
               id={0}
               title=""
               content=""

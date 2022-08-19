@@ -1,5 +1,5 @@
 footer{
-  margin-top: auto;
+  margin-top: 50px;
   text-align: center;
   padding: 10px;
   font-size: 15px;
@@ -11,4 +11,8 @@ footer > div > a{
   text-decoration-line: none;
   color: white;
   font-weight: bold;
+}
+
+footer > div > a:hover{
+  color: black;
 }

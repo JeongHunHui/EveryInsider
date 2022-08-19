@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import Parser from 'html-react-parser';
 import { postDataInterface } from '../pages/MainPage';
 import './styles/PostBox.css';
 
@@ -33,17 +32,5 @@ function PostBox({
     </Link>
   );
 }
-/*
-<Link to={`/postPage/${id}`}>
-  <div key={id} className="postBox">
-    <div className="postTitle">
-      [{type}] {title}
-    </div>
-    <div>
-      작성일: {time} | 조회수: {viewCount} | 좋아요:{like} | 싫어요:
-      {disLike}
-    </div>
-  </div>
-</Link>
-*/
+
 export default PostBox;

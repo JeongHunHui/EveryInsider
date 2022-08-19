@@ -5,7 +5,6 @@ import './styles/NavBar.css';
 function NavBar({ typeKeyValues }: any) {
   const [array, setArray] = useState<string[][]>();
   useEffect(() => {
-    console.log(typeKeyValues);
     setArray(typeKeyValues);
   }, []);
   return array ? (

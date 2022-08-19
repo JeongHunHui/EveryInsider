@@ -33,7 +33,7 @@ public class PostDataService {
     }
 
     private String getTimeStamp(){
-        SimpleDateFormat date = new SimpleDateFormat("yy/MM/dd|HH:mm");
+        SimpleDateFormat date = new SimpleDateFormat("yy.MM.dd HH:mm");
         return date.format(new Date());
     }
 

@@ -1,14 +1,10 @@
 .navBar{
   list-style: none;
   border-left: 1px solid #c4c4c4;
-  padding-left: 7px;
-  padding-right: 7px;
 }
 
 .navBar_first{
   list-style: none;
-  padding-left: 7px;
-  padding-right: 7px;
 }
 
 ul{
@@ -17,7 +13,21 @@ ul{
   margin: 0px;
 }
 
+
+ul > li{
+  height: 34px;
+  display: flex;
+}
+
+ul > li > a{
+  padding: 7px;
+}
+
 li a.active{
+  color: #CF5260;
+}
+
+li a:hover{
   color: #CF5260;
 }
 
@@ -27,7 +37,6 @@ li a.active{
   border: 1px solid #c4c4c4;
   border-radius: 2px;
   background-color: white;
-  padding: 7px;
   padding-left: 0px;
   padding-right: 0px;
   margin-left:7px;
