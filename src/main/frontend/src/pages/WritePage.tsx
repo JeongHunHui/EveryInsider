@@ -5,6 +5,7 @@ import './styles/WritePage.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import saveIcon from '../assets/images/saveIcon.png';
+import listIcon from '../assets/images/listIcon.png';
 
 const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
@@ -103,6 +104,14 @@ function WritePage() {
         }}
       />
       <div className="saveButtonDiv">
+        <button
+          className="goListButton"
+          type="button"
+          onClick={() => navigate('/')}
+        >
+          <img alt="" src={listIcon} />
+          <span>목록으로</span>
+        </button>
         <button className="saveButton" onClick={uploadPost} type="button">
           <img className="saveIcon" src={saveIcon} alt="" />
           <span className="saveText">저장하기</span>

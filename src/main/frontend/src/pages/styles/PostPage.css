@@ -1,0 +1,46 @@
+.postBox{
+  position: relative;
+}
+
+.postInfo{
+  position: absolute;
+  right: 7px;
+  top: 14px;
+  font-size: 13px;
+}
+
+.postContentBox{
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid #c4c4c4;
+  min-height: 250px;
+}
+
+.postMenuBox{
+  justify-content: center;
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid #c4c4c4;
+  display: flex;
+}
+
+.disLikeButton{
+  margin-left: 10px;
+}
+
+.goListButton{
+  position: absolute;
+  right: 7px;
+}
+
+.postMenuBox > button{
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  padding: 5px;
+  background-color: white;
+}
+
+.postMenuBox > button > img{
+  height: 10px;
+  margin-right: 4px;
+}

@@ -38,13 +38,13 @@ function MainPage() {
 
   const defaultData: postDataInterface = {
     id: 0,
-    title: 'title',
-    type: 'free',
+    title: '저녁 뭐먹지?',
+    type: '자유',
     content: 'content',
-    viewCount: 0,
-    like: 0,
+    viewCount: 23,
+    like: 1,
     disLike: 0,
-    time: 'currentTime',
+    time: '21:09',
   };
 
   // 게시물들을 백엔드에서 불러와서 랜더링한다
