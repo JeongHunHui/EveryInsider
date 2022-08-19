@@ -5,6 +5,7 @@ import axios from 'axios';
 import './styles/MainPage.css';
 import PostBox from '../components/PostBox';
 import NavBar from '../components/NavBar';
+import writeIcon from '../assets/images/writeIcon.png';
 
 export interface postDataInterface {
   /** 게시물 id, 생성된 순서대로 1부터 증가 */
@@ -56,11 +57,11 @@ function MainPage() {
       })
       .catch((error) => {
         console.log(error);
-        setPostList([defaultData, defaultData]);
+        setPostList([defaultData]);
       });
   }
 
-  // 게시물들을 백엔드에서 불러와서 랜더링한다
+  // 타입에 맞는 게시물들을 백엔드에서 불러와서 랜더링한다
   async function loadPostsByType() {
     await axios
       .get(getPostByTypeURL.concat(`?type=${param.type}`))
@@ -70,7 +71,7 @@ function MainPage() {
       })
       .catch((error) => {
         console.log(error);
-        setPostList([defaultData, defaultData]);
+        setPostList([defaultData]);
       });
   }
 
@@ -103,7 +104,8 @@ function MainPage() {
       <div className="menuDiv">
         {typeKeyValues ? <NavBar typeKeyValues={typeKeyValues} /> : <div />}
         <Link className="writeButton" to="/writePage">
-          글쓰기
+          <img className="writeIcon" alt="" src={writeIcon} />
+          <div>글쓰기</div>
         </Link>
       </div>
       <div>

@@ -4,6 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './styles/WritePage.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import saveIcon from '../assets/images/saveIcon.png';
 
 const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
@@ -101,9 +102,10 @@ function WritePage() {
           postContent.current = data;
         }}
       />
-      <div>
+      <div className="saveButtonDiv">
         <button className="saveButton" onClick={uploadPost} type="button">
-          저장하기
+          <img className="saveIcon" src={saveIcon} alt="" />
+          <span className="saveText">저장하기</span>
         </button>
       </div>
     </div>
