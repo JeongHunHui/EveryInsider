@@ -62,3 +62,7 @@
   height: 14px;
   margin-right: 7px;
 }
+
+.image > img{
+  max-width: 100%;
+}
