@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 // 스프링 컨테이너에 Repository 로 등록
 public class MemoryPostDataRepository implements PostDataRepository {
-    private static Map<Integer, PostData> store = new HashMap<>();
+    private static Map<Long, PostData> store = new HashMap<>();
     public void save(PostData postData) {
         store.put(postData.getId(), postData);
     }

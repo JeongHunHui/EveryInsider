@@ -51,7 +51,7 @@ public class PostDataController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getCount")
-    public Integer getPostCount(){
+    public Long getPostCount(){
         return postDataService.getPostCount();
     }
 

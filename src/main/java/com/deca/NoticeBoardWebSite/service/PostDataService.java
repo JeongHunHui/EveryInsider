@@ -19,8 +19,8 @@ public class PostDataService {
 
     private final BoardData boardData = new BoardData();
 
-    private static Integer postCount = 0;
-    public Integer getPostCount(){
+    private static Long postCount = 0L;
+    public Long getPostCount(){
         return postCount;
     }
 
@@ -37,7 +37,7 @@ public class PostDataService {
         return date.format(new Date());
     }
 
-    public Integer uploadPost(PostData postData){
+    public Long uploadPost(PostData postData){
         postData.setId(++postCount);
         postData.setTime(getTimeStamp());
         postData.setType(getBoardName(postData.getType()));
