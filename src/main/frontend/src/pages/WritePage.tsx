@@ -17,6 +17,65 @@ function WritePage() {
   const [boardType, setBoardType] = useState('free');
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
 
+  const API_URL = 'http://localhost:8080/api/postData/uploadFile';
+  function uploadAdapter(loader: { file: Promise<any> }) {
+    return {
+      upload: () => {
+        return new Promise((resolve, reject) => {
+          const body = new FormData();
+          loader.file.then((file: string | Blob) => {
+            body.append('files', file);
+            axios
+              .post(API_URL, body)
+              .then((res: any) => {
+                resolve({
+                  default: res.data,
+                });
+              })
+              .catch((err) => {
+                reject(err);
+              });
+          });
+        });
+      },
+    };
+  }
+
+  function uploadPlugin(editor: any) {
+    // eslint-disable-next-line no-param-reassign
+    editor.plugins.get('FileRepository').createUploadAdapter = (
+      loader: any
+    ) => {
+      return uploadAdapter(loader);
+    };
+  }
+
+  const customConfig = {
+    extraPlugins: [uploadPlugin], //
+    placeholder: ' 내용을 입력하세요',
+    toolbar: {
+      items: [
+        'heading',
+        '|',
+        'bold',
+        'italic',
+        'link',
+        'bulletedList',
+        'numberedList',
+        '|',
+        'blockQuote',
+        'insertTable',
+        '|',
+        'imageUpload',
+        'undo',
+        'redo',
+      ],
+    },
+    table: {
+      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+    },
+  };
+
   // 작성한 게시물을 백엔드에 저장하고 메인페이지로 이동
   async function savePostData() {
     const req = {
@@ -89,16 +148,15 @@ function WritePage() {
       </div>
       <CKEditor
         editor={ClassicEditor}
-        config={{
-          placeholder: ' 내용을 입력하세요',
-        }}
+        config={customConfig}
         data="<p></p>"
         onReady={(editor: any) => {
           // You can store the "editor" and use when it is needed.
-          console.log('Editor is ready to use!', editor);
+          console.log(editor);
         }}
         onChange={(event: any, editor: { getData: () => any }) => {
           const data = editor.getData();
+          console.log(data);
           postContent.current = data;
         }}
       />

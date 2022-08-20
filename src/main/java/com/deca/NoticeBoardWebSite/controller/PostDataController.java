@@ -4,7 +4,11 @@ import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,5 +66,35 @@ public class PostDataController {
     public String savePostData(@RequestBody PostData postData){
         postDataService.uploadPost(postData);
         return "success";
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/uploadFile")
+    public File uploadFile(@RequestBody MultipartFile files){
+        // 시간과 original Filename 으로 매핑 시켜서 src 주소를 만들어 낸다.
+        Date date = new Date();
+        StringBuilder sb = new StringBuilder();
+
+        // file image 가 없을 경우
+        if (files.isEmpty()) {
+            sb.append("none");
+        } else {
+            sb.append(date.getTime());
+            sb.append(files.getOriginalFilename());
+        }
+        String path = "/Users/jeonghunhui/Documents/TestImages/" + sb.toString();
+        if (!files.isEmpty()) {
+            File dest = new File(path);
+            try {
+                files.transferTo(dest);
+                return dest;
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // db에 파일 위치랑 번호 등록
+        }
+        return null;
     }
 }
