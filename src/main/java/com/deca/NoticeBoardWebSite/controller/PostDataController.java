@@ -36,7 +36,7 @@ public class PostDataController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getDataById")
-    public PostData getPostDataById(@RequestParam(value="id", defaultValue="0") Integer id){
+    public PostData getPostDataById(@RequestParam(value="id", defaultValue="0") Long id){
         Optional<PostData> postData = postDataService.findById(id);
         if(postData.isPresent()) return postData.get();
         throw new IllegalStateException("잘못된 id 값입니다.");

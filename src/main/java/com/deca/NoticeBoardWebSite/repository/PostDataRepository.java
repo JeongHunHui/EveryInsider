@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface PostDataRepository {
     void save(PostData postData); // 게시물 데이터 저장
-    Optional<PostData> findById(Integer postNum); // 번호로 게시물 찾기
+    Optional<PostData> findById(Long id); // 번호로 게시물 찾기
     Optional<PostData> findByTitle(String title); // 제목으로 게시물 찾기
     List<PostData> findAll(); // 전체 게시물 불러오기
     List<PostData> findByType(String type); // 전체 게시물 불러오기
-    void clearStore();
+    Long getPostCount(); // 전체 게시물 수 가져오기
 }

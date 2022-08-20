@@ -15,7 +15,7 @@ class MemoryPostDataRepositoryTest {
     @AfterEach
     public void afterEach(){
         // store 에 저장된 내용 초기화
-        repository.clearStore();
+        // repository.clearStore();
         System.out.println("----- clear store -----");
     }
 

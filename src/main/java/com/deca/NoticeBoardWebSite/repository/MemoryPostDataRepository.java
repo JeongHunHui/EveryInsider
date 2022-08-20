@@ -13,8 +13,8 @@ public class MemoryPostDataRepository implements PostDataRepository {
     }
 
     @Override
-    public Optional<PostData> findById(Integer postNum) {
-        return Optional.ofNullable(store.get(postNum));
+    public Optional<PostData> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
     }
 
     @Override
@@ -33,7 +33,6 @@ public class MemoryPostDataRepository implements PostDataRepository {
         return list;
     }
 
-    @Override
     public void clearStore(){
         store.clear();
     }
@@ -43,5 +42,10 @@ public class MemoryPostDataRepository implements PostDataRepository {
         List<PostData> list = store.values().stream().filter(data->data.getType() == type).collect(Collectors.toList());
         Collections.reverse(list);
         return list;
+    }
+
+    @Override
+    public Long getPostCount() {
+        return null;
     }
 }

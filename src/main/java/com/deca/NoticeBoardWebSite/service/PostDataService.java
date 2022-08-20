@@ -4,12 +4,13 @@ import com.deca.NoticeBoardWebSite.domain.BoardData;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
 
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+@Transactional
 // 스프링 컨테이너에 PostDataService 를 Service 로 등록한다
 public class PostDataService {
     private final PostDataRepository postDataRepository;
@@ -19,10 +20,10 @@ public class PostDataService {
 
     private final BoardData boardData = new BoardData();
 
-    private static Long postCount = 0L;
-    public Long getPostCount(){
-        return postCount;
-    }
+//    private static Long postCount = 0L;
+//    public Long getPostCount(){
+//        return postCount;
+//    }
 
     private String getBoardName(String type){
         return boardData.getBoardNameByKey(type);
@@ -37,8 +38,12 @@ public class PostDataService {
         return date.format(new Date());
     }
 
+    public Long getPostCount(){
+        return postDataRepository.getPostCount();
+    }
+
     public Long uploadPost(PostData postData){
-        postData.setId(++postCount);
+        // postData.setId(++postCount);
         postData.setTime(getTimeStamp());
         postData.setType(getBoardName(postData.getType()));
 
@@ -50,7 +55,7 @@ public class PostDataService {
     public List<PostData> findAll(){
         return postDataRepository.findAll();
     }
-    public Optional<PostData> findById(Integer id){
+    public Optional<PostData> findById(Long id){
         return postDataRepository.findById(id);
     }
     public List<PostData> findByType(String type){

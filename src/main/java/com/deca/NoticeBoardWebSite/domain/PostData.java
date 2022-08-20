@@ -2,11 +2,16 @@ package com.deca.NoticeBoardWebSite.domain;
 
 import lombok.*;
 
-import java.util.*;
+import javax.persistence.*;
 
+@Entity
 @Setter @Getter @ToString
 // getter, setter 추가, 문자열로 자동변환
 public class PostData {
+
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // DB 에서 자동 생성
     /** 게시물 id, 생성된 순서대로 1부터 증가 */
     private Long id;
 
@@ -25,6 +30,7 @@ public class PostData {
     /** 게시물의 조회수 */
     private Long viewCount;
 
+    @Column(name = "postLike")
     /** 게시물의 좋아요 수 */
     private Long like;
 
