@@ -1,13 +1,10 @@
 package com.deca.NoticeBoardWebSite.repository;
 
 import com.deca.NoticeBoardWebSite.domain.PostData;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.EntityManager;
-import java.net.http.HttpRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
