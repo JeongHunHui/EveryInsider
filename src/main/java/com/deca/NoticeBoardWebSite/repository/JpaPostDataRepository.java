@@ -90,4 +90,6 @@ public class JpaPostDataRepository implements PostDataRepository{
         }
         else return new ResponseEntity<>("can't find by id: " + id.toString(), HttpStatus.BAD_REQUEST);
     }
+
+
 }

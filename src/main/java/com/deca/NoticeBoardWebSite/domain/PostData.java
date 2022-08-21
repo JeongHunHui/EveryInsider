@@ -21,7 +21,7 @@ public class PostData {
     /** 게시물 내용(문자열, 글자제한 있음) */
     private String content;
 
-    /** 당일이면 시간, 당일이 아니면 년도/월/일 yy/MM/dd|HH:mm */
+    /** yy.MM.dd HH:mm */
     private String time;
 
     /** 속해있는 게시판의 종류 free(자유), humor(유머), issue(이슈), secret(비밀) */
