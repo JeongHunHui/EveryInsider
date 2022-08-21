@@ -9,6 +9,7 @@ import listIcon from '../assets/images/listIcon.png';
 
 const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
+const uploadImageURL: string = 'http://localhost:8080/api/postData/uploadFile';
 
 function WritePage() {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ function WritePage() {
   const [boardType, setBoardType] = useState('free');
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
 
-  const API_URL = 'http://localhost:8080/api/postData/uploadFile';
   function uploadAdapter(loader: { file: Promise<any> }) {
     return {
       upload: () => {
@@ -26,7 +26,7 @@ function WritePage() {
           loader.file.then((file: string | Blob) => {
             body.append('files', file);
             axios
-              .post(API_URL, body)
+              .post(uploadImageURL, body)
               .then((res: any) => {
                 resolve({
                   default: res.data,

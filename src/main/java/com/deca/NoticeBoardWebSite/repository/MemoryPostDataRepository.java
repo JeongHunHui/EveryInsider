@@ -1,6 +1,7 @@
 package com.deca.NoticeBoardWebSite.repository;
 
 import com.deca.NoticeBoardWebSite.domain.PostData;
+import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,6 +47,21 @@ public class MemoryPostDataRepository implements PostDataRepository {
 
     @Override
     public Long getPostCount() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<String> updatePostLike(Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<String> updateDisLike(Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<String> updateViewCount(Long id) {
         return null;
     }
 }

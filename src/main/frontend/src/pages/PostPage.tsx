@@ -10,6 +10,12 @@ import listIcon from '../assets/images/listIcon.png';
 import { postDataInterface } from './MainPage';
 
 const getPostDataURL: string = 'http://localhost:8080/api/postData/getDataById';
+const updateLikeURL: string =
+  'http://localhost:8080/api/postData/update/postLike';
+const updateDisLikeURL: string =
+  'http://localhost:8080/api/postData/update/disLike';
+const updateViewCountURL: string =
+  'http://localhost:8080/api/postData/update/viewCount';
 
 function PostPage() {
   const [data, setData] = useState<postDataInterface>();
@@ -33,10 +39,33 @@ function PostPage() {
       .then((res) => setData(res.data))
       .catch((error) => console.log(error));
   }
+
+  async function updateLike() {
+    await axios
+      .get(updateLikeURL.concat(`?id=${id}`))
+      .then(() => getDataById())
+      .catch((error) => console.log(error));
+  }
+
+  async function updateDisLike() {
+    await axios
+      .get(updateDisLikeURL.concat(`?id=${id}`))
+      .then(() => getDataById())
+      .catch((error) => console.log(error));
+  }
+
+  async function updateViewCount() {
+    await axios
+      .get(updateViewCountURL.concat(`?id=${id}`))
+      .then(() => getDataById())
+      .catch((error) => console.log(error));
+  }
+
   useEffect(() => {
-    console.log(id);
+    updateViewCount();
     getDataById();
   }, []);
+
   return data ? (
     <div className="postBox">
       <div>
@@ -49,11 +78,11 @@ function PostPage() {
       </div>
       <div className="postContentBox">{Parser(data?.content)}</div>
       <div className="postMenuBox">
-        <button className="likeButton" type="button">
+        <button className="likeButton" type="button" onClick={updateLike}>
           <img alt="" src={likeIcon} />
           <span>좋아요: {data.like}</span>
         </button>
-        <button className="disLikeButton" type="button">
+        <button className="disLikeButton" type="button" onClick={updateDisLike}>
           <img alt="" src={disLikeIcon} />
           <span>싫어요: {data.disLike}</span>
         </button>

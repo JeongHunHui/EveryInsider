@@ -3,6 +3,8 @@ package com.deca.NoticeBoardWebSite.service;
 import com.deca.NoticeBoardWebSite.domain.BoardData;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
@@ -61,5 +63,13 @@ public class PostDataService {
     public List<PostData> findByType(String type){
         return postDataRepository.findByType(getBoardName(type));
     }
-
+    public ResponseEntity<String> updateViewCount(Long id) {
+        return postDataRepository.updateViewCount(id);
+    }
+    public ResponseEntity<String> updatePostLike(Long id) {
+        return postDataRepository.updatePostLike(id);
+    }
+    public ResponseEntity<String> updateDisLike(Long id) {
+        return postDataRepository.updateDisLike(id);
+    }
 }

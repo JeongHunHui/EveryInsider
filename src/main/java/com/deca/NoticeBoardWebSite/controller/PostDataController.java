@@ -3,6 +3,7 @@ package com.deca.NoticeBoardWebSite.controller;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -66,6 +67,24 @@ public class PostDataController {
     public String savePostData(@RequestBody PostData postData){
         postDataService.uploadPost(postData);
         return "success";
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/update/postLike")
+    public ResponseEntity<String> updatePostLike(@RequestParam(value="id") Long id){
+        return postDataService.updatePostLike(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/update/disLike")
+    public ResponseEntity<String> updateDisLike(@RequestParam(value="id") Long id){
+        return postDataService.updateDisLike(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/update/viewCount")
+    public ResponseEntity<String> updateViewCount(@RequestParam(value="id") Long id){
+        return postDataService.updateViewCount(id);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

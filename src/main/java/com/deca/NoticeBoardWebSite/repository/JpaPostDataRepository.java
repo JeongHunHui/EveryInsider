@@ -1,8 +1,13 @@
 package com.deca.NoticeBoardWebSite.repository;
 
 import com.deca.NoticeBoardWebSite.domain.PostData;
+import org.apache.tomcat.util.http.parser.HttpParser;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.EntityManager;
+import java.net.http.HttpRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +43,7 @@ public class JpaPostDataRepository implements PostDataRepository{
     public List<PostData> findAll() {
         List<PostData> list = em.createQuery("select p from PostData p", PostData.class)
                 .getResultList();
+        System.out.println(list);
         Collections.reverse(list);
         return list;
     }
@@ -53,10 +59,38 @@ public class JpaPostDataRepository implements PostDataRepository{
 
     @Override
     public Long getPostCount() {
-
         return Long.valueOf(findAll().size());
     }
+    @Override
+    public ResponseEntity<String> updatePostLike(Long id){
+        Optional<PostData> postData = findById(id);
+        if(postData != null){
+            postData.get().setLike(postData.get().getLike()+1);
+            save(postData.get());
+            return new ResponseEntity<>("ok!", HttpStatus.OK);
+        }
+        else return new ResponseEntity<>("can't find by id: " + id.toString(), HttpStatus.BAD_REQUEST);
+    }
 
+    @Override
+    public ResponseEntity<String> updateDisLike(Long id) {
+        Optional<PostData> postData = findById(id);
+        if(postData != null){
+            postData.get().setDisLike(postData.get().getDisLike()+1);
+            save(postData.get());
+            return new ResponseEntity<>("ok!", HttpStatus.OK);
+        }
+        else return new ResponseEntity<>("can't find by id: " + id.toString(), HttpStatus.BAD_REQUEST);
+    }
 
-    //SELECT COUNT(*) FROM 테이블;
+    @Override
+    public ResponseEntity<String> updateViewCount(Long id) {
+        Optional<PostData> postData = findById(id);
+        if(postData != null){
+            postData.get().setViewCount(postData.get().getViewCount()+1);
+            save(postData.get());
+            return new ResponseEntity<>("ok!", HttpStatus.OK);
+        }
+        else return new ResponseEntity<>("can't find by id: " + id.toString(), HttpStatus.BAD_REQUEST);
+    }
 }
