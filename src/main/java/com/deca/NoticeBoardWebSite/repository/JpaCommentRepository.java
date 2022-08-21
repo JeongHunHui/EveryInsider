@@ -1,11 +1,9 @@
 package com.deca.NoticeBoardWebSite.repository;
 
 import com.deca.NoticeBoardWebSite.domain.Comment;
-import com.deca.NoticeBoardWebSite.domain.PostData;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 public class JpaCommentRepository implements CommentRepository{
 
@@ -22,7 +20,8 @@ public class JpaCommentRepository implements CommentRepository{
 
     @Override
     public List<Comment> findById(Long postId) {
-        List<Comment> list = em.createQuery("select p from comment p where p.postId = :postId", Comment.class)
+        System.out.println(postId);
+        List<Comment> list = em.createQuery("select p from Comment p where p.postId = :postId", Comment.class)
                 .setParameter("postId", postId)
                 .getResultList();
         return list;

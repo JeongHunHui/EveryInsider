@@ -30,6 +30,8 @@ const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
 const getPostByTypeURL: string =
   'http://localhost:8080/api/postData/getDataByType';
+const getCountByIdURL: string =
+  'http://localhost:8080/api/comment/getCountById';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
@@ -86,6 +88,18 @@ function MainPage() {
       });
   }
 
+  // 타입에 맞는 게시물들을 백엔드에서 불러와서 랜더링한다
+  async function getCountById() {
+    await axios
+      .get(getCountByIdURL.concat(`?postId=${1}`))
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     getBoardType();
     if (param.type === undefined) {
@@ -93,6 +107,7 @@ function MainPage() {
     } else {
       loadPostsByType();
     }
+    getCountById();
   }, [param.type]);
 
   return (

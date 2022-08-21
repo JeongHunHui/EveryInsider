@@ -1,7 +1,10 @@
 package com.deca.NoticeBoardWebSite;
 
+import com.deca.NoticeBoardWebSite.repository.CommentRepository;
+import com.deca.NoticeBoardWebSite.repository.JpaCommentRepository;
 import com.deca.NoticeBoardWebSite.repository.JpaPostDataRepository;
 import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
+import com.deca.NoticeBoardWebSite.service.CommentService;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +35,17 @@ public class SpringConfig {
     public PostDataRepository postDataRepository(){
         return new JpaPostDataRepository(em);
     }
+
+    @Bean
+    public CommentService commentService(){
+        return new CommentService(commentRepository());
+    }
+
+    @Bean
+    public CommentRepository commentRepository(){
+        return new JpaCommentRepository(em);
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
