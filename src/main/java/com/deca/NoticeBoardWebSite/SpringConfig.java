@@ -34,6 +34,7 @@ public class SpringConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http
                 .httpBasic().disable()
                 .cors();
