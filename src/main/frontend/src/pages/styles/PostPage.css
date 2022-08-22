@@ -48,3 +48,9 @@
   height: 10px;
   margin-right: 4px;
 }
+
+.commentListBox{
+  border-top: 1px solid #c4c4c4;
+  margin-top: 7px;
+  padding-top: 7px;
+}

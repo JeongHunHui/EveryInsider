@@ -6,6 +6,7 @@ import './styles/PostPage.css';
 import likeIcon from '../assets/images/likeIcon.png';
 import disLikeIcon from '../assets/images/disLikeIcon.png';
 import listIcon from '../assets/images/listIcon.png';
+import CommentList from '../components/CommentList';
 
 import { postDataInterface } from './MainPage';
 
@@ -95,6 +96,7 @@ function PostPage() {
           <span>목록으로</span>
         </button>
       </div>
+      <CommentList />
     </div>
   ) : (
     // 테스트용
