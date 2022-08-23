@@ -6,7 +6,7 @@ import './styles/PostPage.css';
 import likeIcon from '../assets/images/likeIcon.png';
 import disLikeIcon from '../assets/images/disLikeIcon.png';
 import listIcon from '../assets/images/listIcon.png';
-import CommentList from '../components/CommentList';
+import CommentBox from '../components/CommentBox';
 
 import { postDataInterface } from './MainPage';
 
@@ -17,8 +17,11 @@ const updateDisLikeURL: string =
   'http://localhost:8080/api/postData/update/disLike';
 const updateViewCountURL: string =
   'http://localhost:8080/api/postData/update/viewCount';
+const getCountByIdURL: string =
+  'http://localhost:8080/api/comment/getCountById';
 
 function PostPage() {
+  const [commentCount, setCommentCount] = useState<number>();
   const [data, setData] = useState<postDataInterface>();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,8 +65,22 @@ function PostPage() {
       .catch((error) => console.log(error));
   }
 
+  // 게시물 Id로 해당 게시물의 댓글들을 가져온다
+  async function getCountById() {
+    await axios
+      .get(getCountByIdURL.concat(`?postId=${id}`))
+      .then((res) => {
+        console.log(res.data);
+        setCommentCount(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     updateViewCount();
+    getCountById();
     getDataById();
   }, []);
 
@@ -96,7 +113,10 @@ function PostPage() {
           <span>목록으로</span>
         </button>
       </div>
-      <CommentList />
+      <div className="commentListBox">
+        <div className="postTitle">댓글 {commentCount}</div>
+        <CommentBox />
+      </div>
     </div>
   ) : (
     // 테스트용

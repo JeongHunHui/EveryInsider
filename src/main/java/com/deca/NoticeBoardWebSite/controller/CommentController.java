@@ -31,7 +31,7 @@ public class CommentController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/upload")
+    @PostMapping("/upload")
     public void uploadComment(@RequestBody Comment comment) {
         commentService.uploadComment(comment);
     }

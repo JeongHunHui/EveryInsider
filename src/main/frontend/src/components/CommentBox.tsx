@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CommentInputBox from './CommentInputBox';
+import './styles/CommentBox.css';
 
 const getCommentByIdURL: string =
   'http://localhost:8080/api/comment/getByPostId';
@@ -20,6 +22,7 @@ interface commentInterface {
   time: string;
   /** 댓글 비밀번호, 삭제 시 필요 */
   password: string;
+  isSelected: boolean;
 }
 
 function CommentBox() {
@@ -33,7 +36,10 @@ function CommentBox() {
       .then((res) => {
         console.log(res.data);
         setCommentList(res.data);
-        console.log(commentList);
+        const newCommentList: Array<commentInterface> = res.data;
+        for (let a = 0; a < newCommentList.length; a += 1) {
+          newCommentList[a].isSelected = false;
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -45,13 +51,22 @@ function CommentBox() {
   }, []);
 
   return commentList.length === 0 ? (
-    <button type="button">댓글이 없네요.. 댓글을 달아보세요!</button>
+    <div>
+      {true && <CommentInputBox thisCommentId={0} />}
+      <div className="commentButtonDiv">
+        <button type="button">댓글이 없네요.. 댓글을 달아보세요!</button>
+      </div>
+    </div>
   ) : (
     <div>
+      <CommentInputBox thisCommentId={0} />
       {commentList.map((data: commentInterface) => (
         <div>
           <div>{data.name}</div>
           <div>{data.content}</div>
+          {data.isSelected && (
+            <CommentInputBox thisCommentId={data.commentId} />
+          )}
         </div>
       ))}
     </div>

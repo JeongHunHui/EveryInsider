@@ -42,13 +42,23 @@ public class Comment {
      * @param name 작성자 이름
      * @param content 댓글 내용
      */
-    public Comment(Long postId, Long commentId, String name, String content) {
+    public Comment(Long postId, Long commentId, String name, String content, String password) {
         this.id = 0L; // save 에서 set
         this.postId = postId;
         this.commentId = commentId;
         this.name = name;
         this.content = content;
         this.time = ""; // save 에서 set
-        this.password = ""; // save 에서 set
+        this.password = password;
+    }
+
+    public Comment() {
+        this.id = 0L; // save 에서 set
+        this.postId = 0L;
+        this.commentId = 0L;
+        this.name = "name";
+        this.content = "content";
+        this.time = ""; // save 에서 set
+        this.password = "password";
     }
 }
