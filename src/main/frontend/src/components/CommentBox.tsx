@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentInputBox from './CommentInputBox';
 import './styles/CommentBox.css';
@@ -28,18 +28,20 @@ interface commentInterface {
 function CommentBox() {
   const { id } = useParams();
   const [commentList, setCommentList] = useState(Array<commentInterface>);
+  // const [reCommentList, setReCommentList] = useState(Array<commentInterface[]>);
+  const commentListRef = useRef<commentInterface[]>([]);
 
   // 게시물 Id로 해당 게시물의 댓글들을 가져온다
   async function getCommentById() {
     await axios
       .get(getCommentByIdURL.concat(`?postId=${id}`))
       .then((res) => {
-        console.log(res.data);
-        setCommentList(res.data);
-        const newCommentList: Array<commentInterface> = res.data;
-        for (let a = 0; a < newCommentList.length; a += 1) {
-          newCommentList[a].isSelected = false;
+        commentListRef.current = res.data;
+        console.log(commentListRef.current);
+        for (let a = 0; a < commentListRef.current.length; a += 1) {
+          commentListRef.current[a].isSelected = false;
         }
+        setCommentList(commentListRef.current);
       })
       .catch((error) => {
         console.log(error);
@@ -60,10 +62,25 @@ function CommentBox() {
   ) : (
     <div>
       <CommentInputBox thisCommentId={0} />
-      {commentList.map((data: commentInterface) => (
-        <div>
-          <div>{data.name}</div>
-          <div>{data.content}</div>
+      {commentList.map((data: commentInterface, index: number) => (
+        <div key={data.id}>
+          <button
+            type="button"
+            onClick={() => {
+              for (let i = 0; i < commentListRef.current.length; i += 1) {
+                commentListRef.current[i].isSelected = false;
+              }
+              commentListRef.current[index].isSelected = !data.isSelected;
+              const newList: commentInterface[] = [...commentList];
+              setCommentList(newList);
+            }}
+          >
+            <div>
+              <div>{data.name}</div>
+              <div>{data.content}</div>
+              <div>{data.isSelected}</div>
+            </div>
+          </button>
           {data.isSelected && (
             <CommentInputBox thisCommentId={data.commentId} />
           )}

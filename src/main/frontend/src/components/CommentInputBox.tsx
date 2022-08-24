@@ -38,6 +38,8 @@ function CommentInputBox({ thisCommentId }: commentProps) {
       .post(commentUploadURL, req)
       .then((res) => {
         console.log(res.data);
+        alert('댓글 작성이 완료되었습니다!');
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +60,7 @@ function CommentInputBox({ thisCommentId }: commentProps) {
       비밀번호:{' '}
       <input
         className="commentInput"
-        type="text"
+        type="password"
         placeholder="댓글 비밀번호"
         onChange={(e: { target: { value: string } }) => {
           commentPassword.current = e.target.value;
