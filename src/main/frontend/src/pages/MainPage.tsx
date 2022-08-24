@@ -30,24 +30,11 @@ const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
 const getPostByTypeURL: string =
   'http://localhost:8080/api/postData/getDataByType';
-const getCountByIdURL: string =
-  'http://localhost:8080/api/comment/getCountById';
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
   const param = useParams();
-
-  const defaultData: postDataInterface = {
-    id: 0,
-    title: '저녁 뭐먹지?',
-    type: '자유',
-    content: 'content',
-    viewCount: 23,
-    like: 1,
-    disLike: 0,
-    time: '21:09',
-  };
 
   // 게시물들을 백엔드에서 불러와서 랜더링한다
   async function loadPosts() {
@@ -58,7 +45,6 @@ function MainPage() {
       })
       .catch((error) => {
         console.log(error);
-        setPostList([defaultData]);
       });
   }
 
@@ -71,7 +57,6 @@ function MainPage() {
       })
       .catch((error) => {
         console.log(error);
-        setPostList([defaultData]);
       });
   }
 
@@ -88,26 +73,10 @@ function MainPage() {
       });
   }
 
-  // 타입에 맞는 게시물들을 백엔드에서 불러와서 랜더링한다
-  async function getCountById() {
-    await axios
-      .get(getCountByIdURL.concat(`?postId=${1}`))
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   useEffect(() => {
     getBoardType();
-    if (param.type === undefined) {
-      loadPosts();
-    } else {
-      loadPostsByType();
-    }
-    getCountById();
+    if (param.type === undefined) loadPosts();
+    else loadPostsByType();
   }, [param.type]);
 
   return (
@@ -121,44 +90,11 @@ function MainPage() {
       </div>
       <div>
         {postList.length !== 0 ? (
-          postList.map(
-            ({
-              id,
-              title,
-              content,
-              time,
-              type,
-              viewCount,
-              like,
-              disLike,
-            }: postDataInterface) => (
-              <PostBox
-                key={id}
-                id={id}
-                title={title}
-                content={content}
-                time={time}
-                type={type}
-                viewCount={viewCount}
-                like={like}
-                disLike={disLike}
-              />
-            )
-          )
+          postList.map((element: postDataInterface) => (
+            <PostBox key={element.id} data={element} />
+          ))
         ) : (
-          <div>
-            <PostBox
-              key={0}
-              id={0}
-              title=""
-              content=""
-              time=""
-              type=""
-              viewCount={0}
-              like={0}
-              disLike={0}
-            />
-          </div>
+          <PostBox key={0} data={null} />
         )}
       </div>
     </div>

@@ -6,7 +6,7 @@ import './styles/PostPage.css';
 import likeIcon from '../assets/images/likeIcon.png';
 import disLikeIcon from '../assets/images/disLikeIcon.png';
 import listIcon from '../assets/images/listIcon.png';
-import CommentBox from '../components/CommentBox';
+import CommentList from '../components/CommentList';
 
 import { postDataInterface } from './MainPage';
 
@@ -25,18 +25,6 @@ function PostPage() {
   const [data, setData] = useState<postDataInterface>();
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // // 테스트용
-  // const defaultData: postDataInterface = {
-  //   id: 0,
-  //   title: 'title',
-  //   type: 'free',
-  //   content: 'content',
-  //   viewCount: 0,
-  //   like: 0,
-  //   disLike: 0,
-  //   time: 'currentTime',
-  // };
 
   async function getDataById() {
     await axios(getPostDataURL.concat(`?id=${id}`))
@@ -115,7 +103,7 @@ function PostPage() {
       </div>
       <div className="commentListBox">
         <div className="postTitle">댓글 {commentCount}</div>
-        <CommentBox />
+        <CommentList />
       </div>
     </div>
   ) : (

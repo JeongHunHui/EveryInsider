@@ -2,12 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentInputBox from './CommentInputBox';
+import CommentDiv from './CommentDiv';
 import './styles/CommentBox.css';
 
 const getCommentByIdURL: string =
   'http://localhost:8080/api/comment/getByPostId';
 
-interface commentInterface {
+export interface commentInterface {
   /** 댓글 id, 생성된 순서대로 1부터 증가 */
   id: number;
   /** 댓글이 있는 게시물 id */
@@ -25,7 +26,7 @@ interface commentInterface {
   isSelected: boolean;
 }
 
-function CommentBox() {
+function CommentList() {
   const { id } = useParams();
   const [commentList, setCommentList] = useState(Array<commentInterface>);
   const [reCommentList, setReCommentList] =
@@ -38,7 +39,6 @@ function CommentBox() {
       .get(getCommentByIdURL.concat(`?postId=${id}`))
       .then((res) => {
         commentListRef.current = res.data;
-        console.log(commentListRef.current);
 
         const mainList: commentInterface[] = [];
         const reList = new Map<number, any>();
@@ -59,8 +59,6 @@ function CommentBox() {
             reList.set(element.commentId, [element]);
           }
         });
-        console.log(mainList, reList);
-        console.log(reList.get(2).length);
         setCommentList(mainList);
         setReCommentList(reList);
       })
@@ -95,20 +93,13 @@ function CommentBox() {
               setCommentList([...commentList]);
             }}
           >
-            <div>
-              <div>{data.name}</div>
-              <div>{data.content}</div>
-              <div>{data.isSelected}</div>
-            </div>
+            <CommentDiv key={data.id} prop={data} />
           </button>
           {reCommentList?.get(data.id) !== undefined ? (
             <div>
               <div>
                 {reCommentList?.get(data.id).map((reData: commentInterface) => (
-                  <div key={reData.id}>
-                    <div>{reData.name}----</div>
-                    <div>{reData.content}</div>
-                  </div>
+                  <CommentDiv key={reData.id} prop={data} />
                 ))}
               </div>
               {data.isSelected && <CommentInputBox thisCommentId={data.id} />}
@@ -127,4 +118,4 @@ function CommentBox() {
   );
 }
 
-export default CommentBox;
+export default CommentList;
