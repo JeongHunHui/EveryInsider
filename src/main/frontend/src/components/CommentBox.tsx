@@ -28,7 +28,8 @@ interface commentInterface {
 function CommentBox() {
   const { id } = useParams();
   const [commentList, setCommentList] = useState(Array<commentInterface>);
-  // const [reCommentList, setReCommentList] = useState(Array<commentInterface[]>);
+  const [reCommentList, setReCommentList] =
+    useState<Map<number, commentInterface[]>>();
   const commentListRef = useRef<commentInterface[]>([]);
 
   // 게시물 Id로 해당 게시물의 댓글들을 가져온다
@@ -38,10 +39,30 @@ function CommentBox() {
       .then((res) => {
         commentListRef.current = res.data;
         console.log(commentListRef.current);
+
+        const mainList: commentInterface[] = [];
+        const reList = new Map<number, any>();
+
         for (let a = 0; a < commentListRef.current.length; a += 1) {
           commentListRef.current[a].isSelected = false;
         }
-        setCommentList(commentListRef.current);
+        commentListRef.current.forEach((element) => {
+          if (element.commentId === 0) {
+            mainList.push(element);
+          } else if (reList.has(element.commentId)) {
+            reList.set(element.commentId, [
+              // eslint-disable-next-line no-unsafe-optional-chaining
+              ...reList?.get(element.commentId),
+              element,
+            ]);
+          } else {
+            reList.set(element.commentId, [element]);
+          }
+        });
+        console.log(mainList, reList);
+        console.log(reList.get(2).length);
+        setCommentList(mainList);
+        setReCommentList(reList);
       })
       .catch((error) => {
         console.log(error);
@@ -61,18 +82,17 @@ function CommentBox() {
     </div>
   ) : (
     <div>
-      <CommentInputBox thisCommentId={0} />
       {commentList.map((data: commentInterface, index: number) => (
         <div key={data.id}>
           <button
             type="button"
             onClick={() => {
-              for (let i = 0; i < commentListRef.current.length; i += 1) {
-                commentListRef.current[i].isSelected = false;
+              for (let i = 0; i < commentList.length; i += 1) {
+                if (i === index)
+                  commentList[index].isSelected = !data.isSelected;
+                else commentList[i].isSelected = false;
               }
-              commentListRef.current[index].isSelected = !data.isSelected;
-              const newList: commentInterface[] = [...commentList];
-              setCommentList(newList);
+              setCommentList([...commentList]);
             }}
           >
             <div>
@@ -81,11 +101,28 @@ function CommentBox() {
               <div>{data.isSelected}</div>
             </div>
           </button>
-          {data.isSelected && (
-            <CommentInputBox thisCommentId={data.commentId} />
+          {reCommentList?.get(data.id) !== undefined ? (
+            <div>
+              <div>
+                {reCommentList?.get(data.id).map((reData: commentInterface) => (
+                  <div key={reData.id}>
+                    <div>{reData.name}----</div>
+                    <div>{reData.content}</div>
+                  </div>
+                ))}
+              </div>
+              {data.isSelected && <CommentInputBox thisCommentId={data.id} />}
+            </div>
+          ) : (
+            <div>
+              {data.isSelected && <CommentInputBox thisCommentId={data.id} />}
+            </div>
           )}
         </div>
       ))}
+      <div className="mainInputBox">
+        <CommentInputBox thisCommentId={0} />
+      </div>
     </div>
   );
 }
