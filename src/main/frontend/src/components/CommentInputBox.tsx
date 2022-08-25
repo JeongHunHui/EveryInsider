@@ -22,6 +22,14 @@ function CommentInputBox({ thisCommentId }: commentProps) {
     content: string;
     password: string;
   }
+  /*
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    const inputPassword = prompt('댓글 비밀번호를 입력하세요.');
+    if (inputPassword != null) {
+      if (!korean.test(inputPassword)) deleteCommentById(inputPassword);
+      else alert('비밀번호에 한글은 입력 할 수 없습니다');
+    }
+  */
 
   // 게시물 Id로 해당 게시물의 댓글들을 가져온다
   async function uploadComment() {
@@ -64,7 +72,10 @@ function CommentInputBox({ thisCommentId }: commentProps) {
           type="password"
           placeholder="댓글 비밀번호"
           onChange={(e: { target: { value: string } }) => {
-            commentPassword.current = e.target.value;
+            const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+            if (korean.test(e.target.value))
+              e.target.value = commentPassword.current;
+            else commentPassword.current = e.target.value;
           }}
         />
         <button

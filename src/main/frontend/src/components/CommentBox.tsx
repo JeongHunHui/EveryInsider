@@ -33,10 +33,12 @@ function CommentBox({ prop, index, setIsSelect }: commentBoxProps) {
 
   // 댓글 비밀번호 입력창을 띄우고,
   function deleteComment() {
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const inputPassword = prompt('댓글 비밀번호를 입력하세요.');
     if (inputPassword != null) {
-      deleteCommentById(inputPassword);
-    } else console.log(inputPassword);
+      if (!korean.test(inputPassword)) deleteCommentById(inputPassword);
+      else alert('비밀번호에 한글은 입력 할 수 없습니다');
+    }
   }
 
   return (
