@@ -42,6 +42,12 @@ public class JpaCommentRepository implements CommentRepository{
 
     @Override
     public void deleteComment(Comment comment) {
+        List<Comment> list = em.createQuery("select p from Comment p where p.commentId = :id", Comment.class)
+                .setParameter("id", comment.getId())
+                .getResultList();
+        list.forEach(data->{
+            em.remove(data);
+        });
         em.remove(comment);
     }
 }

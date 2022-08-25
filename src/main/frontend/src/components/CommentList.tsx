@@ -23,6 +23,7 @@ export interface commentInterface {
   time: string;
   /** 댓글 비밀번호, 삭제 시 필요 */
   password: string;
+  /** 현재 댓글창 선택 유무 */
   isSelected: boolean;
 }
 
@@ -47,6 +48,7 @@ function CommentList() {
           commentListRef.current[a].isSelected = false;
         }
         commentListRef.current.forEach((element) => {
+          console.log(element);
           if (element.commentId === 0) {
             mainList.push(element);
           } else if (reList.has(element.commentId)) {
@@ -104,7 +106,7 @@ function CommentList() {
               {reCommentList?.get(data.id).map((reData: commentInterface) => (
                 <CommentBox
                   key={reData.id}
-                  prop={data}
+                  prop={reData}
                   index={index}
                   setIsSelect={setIsSelect}
                 />
