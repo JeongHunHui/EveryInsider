@@ -1,6 +1,13 @@
-.commentInputBox > input{
+.commentInputBox{
+  margin-top: 7px;
+  font-size: 15px;
 }
 
 .commentContentInput{
-  width: 99%;
+  margin-top: 3px;
+  width: 450px;
+}
+
+.commentUploadButton{
+  margin-left: 10px;
 }

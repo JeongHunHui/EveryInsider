@@ -48,28 +48,34 @@ function CommentInputBox({ thisCommentId }: commentProps) {
 
   return (
     <div className="commentInputBox">
-      닉네임:{' '}
-      <input
-        className="commentInput"
-        type="text"
-        placeholder="작성자 이름"
-        onChange={(e: { target: { value: string } }) => {
-          commentName.current = e.target.value;
-        }}
-      />{' '}
-      비밀번호:{' '}
-      <input
-        className="commentInput"
-        type="password"
-        placeholder="댓글 비밀번호"
-        onChange={(e: { target: { value: string } }) => {
-          commentPassword.current = e.target.value;
-        }}
-      />
-      <button type="button" onClick={uploadComment}>
-        완료!
-      </button>
-      <div className="commentContentInput">
+      <div>
+        닉네임:{' '}
+        <input
+          className="commentInput"
+          type="text"
+          placeholder="작성자 이름"
+          onChange={(e: { target: { value: string } }) => {
+            commentName.current = e.target.value;
+          }}
+        />{' '}
+        비밀번호:{' '}
+        <input
+          className="commentInput"
+          type="password"
+          placeholder="댓글 비밀번호"
+          onChange={(e: { target: { value: string } }) => {
+            commentPassword.current = e.target.value;
+          }}
+        />
+        <button
+          className="commentUploadButton"
+          type="button"
+          onClick={uploadComment}
+        >
+          완료!
+        </button>
+      </div>
+      <div className="commentContentInputDiv">
         <input
           className="commentContentInput"
           type="text"

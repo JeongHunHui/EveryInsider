@@ -4,6 +4,7 @@
 
 .mainInputBox{
   padding: 7px;
+  padding-top: 4px;
 }
 
 .mainCommentButton{
@@ -36,7 +37,7 @@
 
 .reCommentBox > .commentBox{
   font-size: 15px;
-  padding: 3px;
+  padding: 7px;
   border: 1px solid #c4c4c4;
   border-radius: 1px;
   margin-top: 3px;
