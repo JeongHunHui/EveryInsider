@@ -2,6 +2,8 @@ package com.deca.NoticeBoardWebSite.service;
 
 import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.repository.CommentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,9 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private String getTimeStamp(){
         SimpleDateFormat date = new SimpleDateFormat("yy.MM.dd HH:mm");
         return date.format(new Date());
@@ -22,6 +27,7 @@ public class CommentService {
 
     public void uploadComment(Comment comment) {
         comment.setTime(getTimeStamp());
+        comment.encodingPassword(passwordEncoder);
         commentRepository.save(comment);
     }
 
@@ -39,5 +45,9 @@ public class CommentService {
 
     public void deleteComment(Comment comment){
         commentRepository.deleteComment(comment);
+    }
+
+    public boolean checkPassword(Comment comment, String password){
+        return comment.checkPassword(password, passwordEncoder);
     }
 }

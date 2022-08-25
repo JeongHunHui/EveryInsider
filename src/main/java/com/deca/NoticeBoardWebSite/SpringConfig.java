@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.persistence.EntityManager;
@@ -26,6 +28,7 @@ public class SpringConfig {
     public SpringConfig(EntityManager em){
         this.em = em;
     }
+    
     @Bean
     public PostDataService postDataService(){
         return new PostDataService(postDataRepository());
@@ -53,5 +56,10 @@ public class SpringConfig {
                 .httpBasic().disable()
                 .cors();
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

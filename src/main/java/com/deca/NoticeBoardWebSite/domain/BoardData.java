@@ -12,6 +12,7 @@ public class BoardData {
     // keys, values 는 나중에 DB에 넣고 꺼내쓰기
     private String[] keys = {"free", "humor", "issue", "question", "secret"};
     private String[] values = {"자유", "유머", "이슈", "질문", "비밀"};
+
     public String getBoardNameByKey(String key) {
         for(int i = 0; i < keys.length; i++){
             if(key.equals(keys[i])) return values[i];

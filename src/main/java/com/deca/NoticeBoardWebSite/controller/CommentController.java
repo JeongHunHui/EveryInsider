@@ -3,6 +3,8 @@ package com.deca.NoticeBoardWebSite.controller;
 import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +48,9 @@ public class CommentController {
     public Boolean deleteById(@RequestBody Map<String,String> map){
         Long id = Long.valueOf(map.get("id"));
         Comment findComment = commentService.findById(id);
-        if(findComment.getPassword().equals(map.get("password"))){
+        boolean isPasswordCorrect = commentService.checkPassword(findComment, map.get("password"));
+
+        if(isPasswordCorrect){
             commentService.deleteComment(findComment);
             return true;
         }

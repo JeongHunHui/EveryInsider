@@ -16,16 +16,12 @@ import java.util.Optional;
 // 스프링 컨테이너에 PostDataService 를 Service 로 등록한다
 public class PostDataService {
     private final PostDataRepository postDataRepository;
+
     public PostDataService(PostDataRepository postDataRepository){
         this.postDataRepository = postDataRepository;
     }
 
     private final BoardData boardData = new BoardData();
-
-//    private static Long postCount = 0L;
-//    public Long getPostCount(){
-//        return postCount;
-//    }
 
     private String getBoardName(String type){
         return boardData.getBoardNameByKey(type);
