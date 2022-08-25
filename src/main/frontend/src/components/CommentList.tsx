@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentInputBox from './CommentInputBox';
-import CommentDiv from './CommentDiv';
-import './styles/CommentBox.css';
+import CommentBox from './CommentBox';
+import './styles/CommentList.css';
 
 const getCommentByIdURL: string =
   'http://localhost:8080/api/comment/getByPostId';
@@ -67,6 +67,15 @@ function CommentList() {
       });
   }
 
+  const setIsSelect = (index: number) => {
+    for (let i = 0; i < commentList.length; i += 1) {
+      if (i === index)
+        commentList[index].isSelected = !commentList[index].isSelected;
+      else commentList[i].isSelected = false;
+    }
+    setCommentList([...commentList]);
+  };
+
   useEffect(() => {
     getCommentById();
   }, []);
@@ -81,27 +90,25 @@ function CommentList() {
   ) : (
     <div>
       {commentList.map((data: commentInterface, index: number) => (
-        <div key={data.id}>
-          <button
-            type="button"
-            onClick={() => {
-              for (let i = 0; i < commentList.length; i += 1) {
-                if (i === index)
-                  commentList[index].isSelected = !data.isSelected;
-                else commentList[i].isSelected = false;
-              }
-              setCommentList([...commentList]);
-            }}
-          >
-            <CommentDiv key={data.id} prop={data} />
-          </button>
+        <div key={data.id} className="mainCommentBox">
+          <div className="mainCommentButton">
+            <CommentBox
+              key={data.id}
+              prop={data}
+              index={index}
+              setIsSelect={setIsSelect}
+            />
+          </div>
           {reCommentList?.get(data.id) !== undefined ? (
-            <div>
-              <div>
-                {reCommentList?.get(data.id).map((reData: commentInterface) => (
-                  <CommentDiv key={reData.id} prop={data} />
-                ))}
-              </div>
+            <div className="reCommentBox">
+              {reCommentList?.get(data.id).map((reData: commentInterface) => (
+                <CommentBox
+                  key={reData.id}
+                  prop={data}
+                  index={index}
+                  setIsSelect={setIsSelect}
+                />
+              ))}
               {data.isSelected && <CommentInputBox thisCommentId={data.id} />}
             </div>
           ) : (

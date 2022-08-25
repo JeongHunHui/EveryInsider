@@ -1,0 +1,78 @@
+.commentButtonDiv{
+  margin-top: 10px;
+}
+
+.mainInputBox{
+  padding: 7px;
+}
+
+.mainCommentButton{
+  border: none;
+  background-color: white;
+  font-size: 15px;
+  padding: 0px;
+}
+
+.commentName{
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.reCommentBox{
+  margin-left: 10px;
+  left: 10px;
+}
+
+.commentBox{
+  text-align: left;
+  padding: 3px;
+}
+.mainCommentBox{
+  border: 1px solid #c4c4c4;
+  border-radius: 1px;
+  padding: 7px;
+  margin-bottom: 3px;
+}
+
+.reCommentBox > .commentBox{
+  font-size: 15px;
+  padding: 3px;
+  border: 1px solid #c4c4c4;
+  border-radius: 1px;
+  margin-top: 3px;
+  background-color: rgb(239, 239, 239);
+}
+
+.commentDeleteButton{
+  padding: 0px;
+  margin-left: 10px;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  border-radius: 1px;
+}
+
+.commentDeleteButton > img{
+  padding: 2px;
+  padding-bottom: 0px;
+  height: 10px;
+}
+
+.commentInfo{
+  margin-bottom: 3px;
+}
+
+.commentContent{
+  border: none;
+  padding: 0px;
+  width: 100%;
+  text-align: left;
+  background-color: white;
+}
+
+.commentContent:hover{
+  color: #CF5260;
+}
+
+.reCommentBox > .commentBox > .commentContent{
+  background-color: rgb(239, 239, 239);
+}
