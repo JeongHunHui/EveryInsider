@@ -1,13 +1,12 @@
 package com.deca.NoticeBoardWebSite.controller;
 
 import com.deca.NoticeBoardWebSite.domain.Comment;
-import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.service.CommentService;
-import com.deca.NoticeBoardWebSite.service.PostDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController // 스프링 컨테이너에 controller 임을 알려주는 표시
 // + ResponseBody 기능
@@ -27,7 +26,7 @@ public class CommentController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getByPostId")
     public List<Comment> getCommentById(@RequestParam(value="postId") long postId){
-        return commentService.findById(postId);
+        return commentService.findByPostId(postId);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -40,5 +39,17 @@ public class CommentController {
     @GetMapping("/getCountById")
     public Long getCommentCountById(@RequestParam(value="postId") Long postId) {
         return commentService.getCommentCountById(postId);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/deleteById")
+    public Boolean deleteById(@RequestBody Map<String,String> map){
+        Long id = Long.valueOf(map.get("id"));
+        Comment findComment = commentService.findById(id);
+        if(findComment.getPassword().equals(map.get("password"))){
+            commentService.deleteComment(findComment);
+            return true;
+        }
+        return false;
     }
 }

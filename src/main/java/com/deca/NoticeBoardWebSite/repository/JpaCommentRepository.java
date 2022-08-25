@@ -19,7 +19,7 @@ public class JpaCommentRepository implements CommentRepository{
     }
 
     @Override
-    public List<Comment> findById(Long postId) {
+    public List<Comment> findByPostId(Long postId) {
         System.out.println(postId);
         List<Comment> list = em.createQuery("select p from Comment p where p.postId = :postId", Comment.class)
                 .setParameter("postId", postId)
@@ -28,7 +28,20 @@ public class JpaCommentRepository implements CommentRepository{
     }
 
     @Override
+    public Comment findById(Long id) {
+        Comment comment = em.createQuery("select p from Comment p where p.id = :id", Comment.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return comment;
+    }
+
+    @Override
     public Long getCommentCountById(Long postId) {
-        return Long.valueOf(findById(postId).size());
+        return Long.valueOf(findByPostId(postId).size());
+    }
+
+    @Override
+    public void deleteComment(Comment comment) {
+        em.remove(comment);
     }
 }

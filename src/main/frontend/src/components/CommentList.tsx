@@ -113,7 +113,11 @@ function CommentList() {
             </div>
           ) : (
             <div>
-              {data.isSelected && <CommentInputBox thisCommentId={data.id} />}
+              {data.isSelected && (
+                <div className="reCommentBox">
+                  <CommentInputBox thisCommentId={data.id} />
+                </div>
+              )}
             </div>
           )}
         </div>

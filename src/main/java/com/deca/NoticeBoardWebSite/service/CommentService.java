@@ -1,9 +1,7 @@
 package com.deca.NoticeBoardWebSite.service;
 
 import com.deca.NoticeBoardWebSite.domain.Comment;
-import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.repository.CommentRepository;
-import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
@@ -27,11 +25,19 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<Comment> findById(Long postId) {
-        return commentRepository.findById(postId);
+    public List<Comment> findByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
+    }
+
+    public Comment findById(Long id){
+        return commentRepository.findById(id);
     }
 
     public Long getCommentCountById(Long postId) {
         return commentRepository.getCommentCountById(postId);
+    }
+
+    public void deleteComment(Comment comment){
+        commentRepository.deleteComment(comment);
     }
 }
