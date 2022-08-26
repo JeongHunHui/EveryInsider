@@ -11,7 +11,7 @@ function NavBar({ typeKeyValues }: any) {
     <nav className="navList">
       <ul>
         <li className="navBar_first">
-          <NavLink to="/">전체</NavLink>
+          <NavLink to="/all">전체</NavLink>
         </li>
         {array.map((data: string[]) => (
           <li className="navBar" key={data[0]}>

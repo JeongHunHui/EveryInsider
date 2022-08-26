@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles/MainPage.css';
 import PostBox from '../components/PostBox';
 import NavBar from '../components/NavBar';
+import PageNav from '../components/PageNav';
 import writeIcon from '../assets/images/writeIcon.png';
 
 export interface postDataInterface {
@@ -26,7 +27,6 @@ export interface postDataInterface {
   disLike: number;
 }
 
-const getAllPostDataURL: string = 'http://localhost:8080/api/postData/getAll';
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
 const getPostByTypeURL: string =
   'http://localhost:8080/api/postData/getDataByType';
@@ -35,18 +35,7 @@ function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
   const param = useParams();
-
-  // 게시물들을 백엔드에서 불러와서 랜더링한다
-  async function loadPosts() {
-    await axios
-      .get(getAllPostDataURL)
-      .then((res) => {
-        setPostList(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const navigate = useNavigate();
 
   // 타입에 맞는 게시물들을 백엔드에서 불러와서 랜더링한다
   async function loadPostsByType() {
@@ -74,10 +63,12 @@ function MainPage() {
   }
 
   useEffect(() => {
-    getBoardType();
-    if (param.type === undefined) loadPosts();
+    if (param.type === undefined) navigate('/all/1');
+    else if (param.page === undefined) navigate('./1');
     else loadPostsByType();
-  }, [param.type]);
+    getBoardType();
+    console.log(param.page);
+  }, [param.type, param.page]);
 
   return (
     <div>
@@ -97,6 +88,11 @@ function MainPage() {
           <PostBox key={0} data={null} />
         )}
       </div>
+      <PageNav
+        postCount={166}
+        currentPage={parseInt(param.page, 10)}
+        boardType={param.type}
+      />
     </div>
   );
 }

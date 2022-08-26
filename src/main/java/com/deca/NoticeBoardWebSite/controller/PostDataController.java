@@ -29,13 +29,6 @@ public class PostDataController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/getAll")
-    public List<PostData> getAllPostData(){
-        List<PostData> postDataArray = postDataService.findAll();
-        return postDataArray;
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getDataById")
     public PostData getPostDataById(@RequestParam(value="id", defaultValue="0") Long id){
         Optional<PostData> postData = postDataService.findById(id);
@@ -46,7 +39,7 @@ public class PostDataController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getDataByType")
     public List<PostData> getPostDataByType(@RequestParam(value="type") String type){
-        List<PostData> postDataList = postDataService.findByType(type);
+        List<PostData> postDataList = type.equals("all") ? postDataService.findAll() : postDataService.findByType(type);
         return postDataList;
     }
 
