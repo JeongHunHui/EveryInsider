@@ -34,6 +34,7 @@ const getPostByTypeURL: string =
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
+  const [postCount, setPostCount] = useState<number>();
   const param = useParams();
   const navigate = useNavigate();
 
@@ -42,7 +43,17 @@ function MainPage() {
     await axios
       .get(getPostByTypeURL.concat(`?type=${param.type}`))
       .then((res) => {
-        setPostList(res.data);
+        const list: postDataInterface[] = res.data;
+        setPostCount(list.length);
+        // 10은 postNav의 변수와 같은값이 되야함
+        const pageNum = (parseInt(param.page, 10) - 1) * 10;
+        const newList: postDataInterface[] = [];
+        for (let i = 0; i < 10; i += 1) {
+          console.log(list[pageNum + i]);
+          if (list[pageNum + i] === undefined) break;
+          newList[i] = list[pageNum + i];
+        }
+        setPostList(newList);
       })
       .catch((error) => {
         console.log(error);
@@ -89,7 +100,7 @@ function MainPage() {
         )}
       </div>
       <PageNav
-        postCount={166}
+        postCount={postCount}
         currentPage={parseInt(param.page, 10)}
         boardType={param.type}
       />
