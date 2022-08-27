@@ -20,7 +20,6 @@ public class JpaCommentRepository implements CommentRepository{
 
     @Override
     public List<Comment> findByPostId(Long postId) {
-        System.out.println(postId);
         List<Comment> list = em.createQuery("select p from Comment p where p.postId = :postId", Comment.class)
                 .setParameter("postId", postId)
                 .getResultList();

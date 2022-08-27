@@ -1,10 +1,13 @@
 package com.deca.NoticeBoardWebSite.service;
 
 import com.deca.NoticeBoardWebSite.domain.BoardData;
+import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
@@ -20,6 +23,9 @@ public class PostDataService {
     public PostDataService(PostDataRepository postDataRepository){
         this.postDataRepository = postDataRepository;
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final BoardData boardData = new BoardData();
 
@@ -67,5 +73,13 @@ public class PostDataService {
     }
     public ResponseEntity<String> updateDisLike(Long id) {
         return postDataRepository.updateDisLike(id);
+    }
+
+    public void deletePost(Long id){
+        postDataRepository.deletePost(id);
+    }
+
+    public boolean checkPassword(PostData postData, String password){
+        return postData.checkPassword(password, passwordEncoder);
     }
 }

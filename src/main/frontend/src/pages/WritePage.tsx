@@ -18,6 +18,7 @@ function WritePage() {
   const [boardType, setBoardType] = useState('free');
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
 
+  // 이미지 파일 업로드시 필요
   function uploadAdapter(loader: { file: Promise<any> }) {
     return {
       upload: () => {
@@ -41,6 +42,7 @@ function WritePage() {
     };
   }
 
+  // 이미지 파일 업로드 시 필요
   function uploadPlugin(editor: any) {
     // eslint-disable-next-line no-param-reassign
     editor.plugins.get('FileRepository').createUploadAdapter = (
@@ -66,7 +68,7 @@ function WritePage() {
         'blockQuote',
         'insertTable',
         '|',
-        'imageUpload',
+        // 'imageUpload', 나중에 s3버킷 추가 후에 활성화
         'undo',
         'redo',
       ],
@@ -78,6 +80,14 @@ function WritePage() {
 
   // 작성한 게시물을 백엔드에 저장하고 메인페이지로 이동
   async function savePostData() {
+    if (postTitle.current.length > 50) {
+      alert('제목의 길이를 초과했습니다!');
+      return;
+    }
+    if (postContent.current.length > 100000) {
+      alert('게시물의 용량을 초과했습니다!');
+      return;
+    }
     const req = {
       title: postTitle.current, // 제목 input 태그 값 가져오기
       content: postContent.current, // 에디터에서 내용 가져오기
@@ -156,7 +166,6 @@ function WritePage() {
         }}
         onChange={(event: any, editor: { getData: () => any }) => {
           const data = editor.getData();
-          console.log(data);
           postContent.current = data;
         }}
       />

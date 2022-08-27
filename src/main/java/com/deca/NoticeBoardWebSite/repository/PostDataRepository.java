@@ -1,5 +1,6 @@
 package com.deca.NoticeBoardWebSite.repository;
 
+import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import org.springframework.http.ResponseEntity;
 
@@ -16,4 +17,6 @@ public interface PostDataRepository {
     ResponseEntity<String> updatePostLike(Long id); // 좋아요 업데이트
     ResponseEntity<String> updateDisLike(Long id); // 싫어요 업데이트
     ResponseEntity<String> updateViewCount(Long id); // 조회수 업데이트
+    /** 게시물 를 받아서 해당하는 게시물을 삭제한다 */
+    void deletePost(Long id);
 }

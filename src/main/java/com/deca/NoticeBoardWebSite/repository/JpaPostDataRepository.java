@@ -1,5 +1,6 @@
 package com.deca.NoticeBoardWebSite.repository;
 
+import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,6 @@ public class JpaPostDataRepository implements PostDataRepository{
     public List<PostData> findAll() {
         List<PostData> list = em.createQuery("select p from PostData p", PostData.class)
                 .getResultList();
-        System.out.println(list);
         Collections.reverse(list);
         return list;
     }
@@ -91,5 +91,11 @@ public class JpaPostDataRepository implements PostDataRepository{
         else return new ResponseEntity<>("can't find by id: " + id.toString(), HttpStatus.BAD_REQUEST);
     }
 
-
+    @Override
+    public void deletePost(Long id) {
+        PostData data = em.createQuery("select p from PostData p where p.id = :id", PostData.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        em.remove(data);
+    }
 }

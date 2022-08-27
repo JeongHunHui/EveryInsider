@@ -6,6 +6,7 @@ import './styles/PostPage.css';
 import likeIcon from '../assets/images/likeIcon.png';
 import disLikeIcon from '../assets/images/disLikeIcon.png';
 import listIcon from '../assets/images/listIcon.png';
+import deleteIcon from '../assets/images/deleteIcon.png';
 import CommentList from '../components/CommentList';
 
 import { postDataInterface } from './MainPage';
@@ -19,6 +20,8 @@ const updateViewCountURL: string =
   'http://localhost:8080/api/postData/update/viewCount';
 const getCountByIdURL: string =
   'http://localhost:8080/api/comment/getCountById';
+const deletePostByIdURL: string =
+  'http://localhost:8080/api/postData/deleteById';
 
 function PostPage() {
   const [commentCount, setCommentCount] = useState<number>();
@@ -66,6 +69,34 @@ function PostPage() {
       });
   }
 
+  async function deletePostById(inputPassword: string) {
+    const req = {
+      id,
+      password: inputPassword,
+    };
+    await axios
+      .post(deletePostByIdURL, req)
+      .then((res) => {
+        if (res.data) {
+          alert('게시물을 삭제하였습니다.');
+          window.location.reload();
+        } else alert('비밀번호가 옳지 않습니다.');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // 댓글 비밀번호 입력창을 띄우고,
+  function deletePost() {
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    const inputPassword = prompt('게시물 비밀번호를 입력하세요.');
+    if (inputPassword != null) {
+      if (!korean.test(inputPassword)) deletePostById(inputPassword);
+      else alert('비밀번호에 한글은 입력 할 수 없습니다');
+    }
+  }
+
   useEffect(() => {
     updateViewCount();
     getCountById();
@@ -84,6 +115,10 @@ function PostPage() {
       </div>
       <div className="postContentBox">{Parser(data?.content)}</div>
       <div className="postMenuBox">
+        <button className="deleteButton" type="button" onClick={deletePost}>
+          <img alt="" src={deleteIcon} />
+          <span>삭제하기</span>
+        </button>
         <button className="likeButton" type="button" onClick={updateLike}>
           <img alt="" src={likeIcon} />
           <span>좋아요: {data.like}</span>

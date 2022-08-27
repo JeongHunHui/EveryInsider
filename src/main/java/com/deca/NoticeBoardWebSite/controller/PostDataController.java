@@ -1,5 +1,6 @@
 package com.deca.NoticeBoardWebSite.controller;
 
+import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController // 스프링 컨테이너에 controller 임을 알려주는 표시
@@ -82,6 +84,7 @@ public class PostDataController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/uploadFile")
+    // 이미지 파일 업로드, 나중에 path 만 s3버킷이랑 연동하면 될듯?
     public String uploadFile(@RequestBody MultipartFile files){
         // 시간과 original Filename 으로 매핑 시켜서 src 주소를 만들어 낸다.
         Date date = new Date();
@@ -108,5 +111,19 @@ public class PostDataController {
             // db에 파일 위치랑 번호 등록
         }
         return null;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/deleteById")
+    public Boolean deleteById(@RequestBody Map<String,String> map){
+        Long id = Long.valueOf(map.get("id"));
+        PostData findPostData = postDataService.findById(id).get();
+        boolean isPasswordCorrect = postDataService.checkPassword(findPostData, map.get("password"));
+
+        if(isPasswordCorrect){
+            postDataService.deletePost(id);
+            return true;
+        }
+        return false;
     }
 }
