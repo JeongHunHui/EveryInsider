@@ -55,3 +55,8 @@
   margin-top: 7px;
   padding-top: 7px;
 }
+
+.deleteButton{
+  position: absolute;
+  right: 90px;
+}

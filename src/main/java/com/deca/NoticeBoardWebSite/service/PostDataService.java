@@ -50,6 +50,7 @@ public class PostDataService {
         // postData.setId(++postCount);
         postData.setTime(getTimeStamp());
         postData.setType(getBoardName(postData.getType()));
+        postData.encodingPassword(passwordEncoder);
 
         // 저장소에 저장
         postDataRepository.save(postData);

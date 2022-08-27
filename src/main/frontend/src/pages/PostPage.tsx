@@ -79,7 +79,7 @@ function PostPage() {
       .then((res) => {
         if (res.data) {
           alert('게시물을 삭제하였습니다.');
-          window.location.reload();
+          navigate('/');
         } else alert('비밀번호가 옳지 않습니다.');
       })
       .catch((error) => {
@@ -110,7 +110,8 @@ function PostPage() {
           [{data?.type}] {data?.title}
         </span>
         <span className="postInfo">
-          {data?.time} | 조회수: {data?.viewCount}
+          작성자: {data.writer ?? '익명'} | {data?.time} | 조회수:{' '}
+          {data?.viewCount}
         </span>
       </div>
       <div className="postContentBox">{Parser(data?.content)}</div>

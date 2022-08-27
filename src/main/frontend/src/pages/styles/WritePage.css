@@ -38,10 +38,15 @@
   text-align: left;
 }
 
-.saveButtonDiv{
+.bottomMenus{
   display: flex;
-  justify-content: right;
   margin-top: 7px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoInputDiv > input{
+  width: 100px;
 }
 
 .saveButtonDiv > button{

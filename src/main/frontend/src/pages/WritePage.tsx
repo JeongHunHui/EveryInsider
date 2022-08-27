@@ -15,6 +15,8 @@ function WritePage() {
   const navigate = useNavigate();
   const postTitle = useRef('');
   const postContent = useRef('');
+  const postWriter = useRef('');
+  const postPassword = useRef('');
   const [boardType, setBoardType] = useState('free');
   const [typeKeyValues, setTypeKeyValues] = useState<string[][]>();
 
@@ -92,6 +94,8 @@ function WritePage() {
       title: postTitle.current, // 제목 input 태그 값 가져오기
       content: postContent.current, // 에디터에서 내용 가져오기
       type: boardType, // 게시판 combobox 값 가져오기
+      writer: postWriter.current, // 아래 작성자 input 태그 값 가져오기
+      password: postPassword.current, // 아래 비밀번호 input 태그 값 가져오기
     };
     console.log(req);
 
@@ -127,6 +131,15 @@ function WritePage() {
 
   function typeChange(e: { target: { value: string } }) {
     setBoardType(e.target.value);
+  }
+
+  function writerChange(e: { target: { value: string } }) {
+    postWriter.current = e.target.value;
+  }
+
+  function passwordChange(e: { target: { value: string } }) {
+    postPassword.current = e.target.value;
+    console.log(postPassword.current);
   }
 
   useEffect(() => {
@@ -169,19 +182,37 @@ function WritePage() {
           postContent.current = data;
         }}
       />
-      <div className="saveButtonDiv">
-        <button
-          className="goListButton"
-          type="button"
-          onClick={() => navigate('/')}
-        >
-          <img alt="" src={listIcon} />
-          <span>목록으로</span>
-        </button>
-        <button className="saveButton" onClick={uploadPost} type="button">
-          <img className="saveIcon" src={saveIcon} alt="" />
-          <span className="saveText">저장하기</span>
-        </button>
+      <div className="bottomMenus">
+        <div className="infoInputDiv">
+          작성자:{' '}
+          <input
+            className="writerInput"
+            type="text"
+            placeholder="작성자"
+            onChange={writerChange}
+          />{' '}
+          비밀번호:{' '}
+          <input
+            className="passwordInput"
+            type="password"
+            placeholder="비밀번호"
+            onChange={passwordChange}
+          />
+        </div>
+        <div className="saveButtonDiv">
+          <button
+            className="goListButton"
+            type="button"
+            onClick={() => navigate('/')}
+          >
+            <img alt="" src={listIcon} />
+            <span>목록으로</span>
+          </button>
+          <button className="saveButton" onClick={uploadPost} type="button">
+            <img className="saveIcon" src={saveIcon} alt="" />
+            <span className="saveText">저장하기</span>
+          </button>
+        </div>
       </div>
     </div>
   );

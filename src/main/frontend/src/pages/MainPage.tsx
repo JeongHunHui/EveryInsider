@@ -26,6 +26,8 @@ export interface postDataInterface {
   like: number;
   /** 게시물의 싫어요 수 */
   disLike: number;
+  /** 게시물의 작성자 */
+  writer: string;
 }
 
 interface stateInterface {
