@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 interface pageNavProp {
   postCount: number;
@@ -18,9 +18,9 @@ function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
   const maxPageCount = useRef(0);
   const [pageCount, setPageCount] = useState(0);
   /** 한 페이지에 들어있는 게시물 개수 */
-  const postCountOnePage = 10;
+  const postCountOnePage = 2;
   /** 한 페이지에 보여주는 페이지의 개수 */
-  const pageCountOnePage = 10;
+  const pageCountOnePage = 2;
 
   useEffect(() => {
     if (Number.isNaN(currentPage) || currentPage < 1) return;
@@ -37,13 +37,24 @@ function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
       const maxCount =
         // 현재가 마지막 페이지가 아니면 기본값
         // 마지막 페이지면 남은 페이지 수
+        // eslint-disable-next-line no-nested-ternary
         maxPageCount.current > currentPageCount.current
+          ? pageCountOnePage
+          : newPageCount % pageCountOnePage === 0
           ? pageCountOnePage
           : newPageCount % pageCountOnePage;
       const arr = [];
       for (let i = 0; i < maxCount; i += 1) {
         arr[i] = (currentPageCount.current - 1) * pageCountOnePage + i + 1;
       }
+      console.log(
+        postCount,
+        currentPage,
+        newPageCount,
+        maxPageCount.current,
+        currentPageCount.current,
+        maxCount
+      );
       setArr(arr);
     }
     // 잘못된 페이지 접근 시
@@ -67,28 +78,33 @@ function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
   }
 
   return pageCount > 0 ? (
-    <div>
-      <button
-        onClick={() => {
-          pageUpDown(-1);
-        }}
-        type="button"
-      >
-        이전
-      </button>
+    <div className="pageLink">
+      {currentPageCount.current !== 1 && (
+        <button
+          onClick={() => {
+            pageUpDown(-1);
+          }}
+          type="button"
+        >
+          이전
+        </button>
+      )}
+
       {indexArr.map((element) => (
-        <Link to={`/${boardType}/${element}`} key={element}>
+        <NavLink to={`/${boardType}/${element}`} key={element}>
           {`<${element}>`}
-        </Link>
+        </NavLink>
       ))}
-      <button
-        onClick={() => {
-          pageUpDown(1);
-        }}
-        type="button"
-      >
-        다음
-      </button>
+      {currentPageCount.current < maxPageCount.current && (
+        <button
+          onClick={() => {
+            pageUpDown(1);
+          }}
+          type="button"
+        >
+          다음
+        </button>
+      )}
     </div>
   ) : (
     <div />

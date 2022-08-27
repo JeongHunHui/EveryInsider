@@ -23,7 +23,7 @@ ul > li > a{
   padding: 7px;
 }
 
-li a.active{
+a.active{
   color: #CF5260;
 }
 

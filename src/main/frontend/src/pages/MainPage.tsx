@@ -46,9 +46,10 @@ function MainPage() {
         const list: postDataInterface[] = res.data;
         setPostCount(list.length);
         // 10은 postNav의 변수와 같은값이 되야함
-        const pageNum = (parseInt(param.page, 10) - 1) * 10;
+        const pageNum = (parseInt(param.page, 10) - 1) * 2;
+        console.log(pageNum);
         const newList: postDataInterface[] = [];
-        for (let i = 0; i < 10; i += 1) {
+        for (let i = 0; i < 2; i += 1) {
           console.log(list[pageNum + i]);
           if (list[pageNum + i] === undefined) break;
           newList[i] = list[pageNum + i];

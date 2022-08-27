@@ -95,7 +95,7 @@ function PostPage() {
         <button
           className="goListButton"
           type="button"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(-1)}
         >
           <img alt="" src={listIcon} />
           <span>목록으로</span>
