@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles/MainPage.css';
+import { useSelector } from 'react-redux';
 import PostBox from '../components/PostBox';
 import NavBar from '../components/NavBar';
 import PageNav from '../components/PageNav';
@@ -27,6 +28,13 @@ export interface postDataInterface {
   disLike: number;
 }
 
+interface stateInterface {
+  pageNavConsts: {
+    postCountInOnePage: number;
+    pageCountInOnePage: number;
+  };
+}
+
 const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
 const getPostByTypeURL: string =
   'http://localhost:8080/api/postData/getDataByType';
@@ -37,6 +45,9 @@ function MainPage() {
   const [postCount, setPostCount] = useState<number>();
   const param = useParams();
   const navigate = useNavigate();
+  const postCountInOnePage: number = useSelector((data: stateInterface) => {
+    return data.pageNavConsts.postCountInOnePage;
+  });
 
   // 타입에 맞는 게시물들을 백엔드에서 불러와서 랜더링한다
   async function loadPostsByType() {
@@ -46,10 +57,9 @@ function MainPage() {
         const list: postDataInterface[] = res.data;
         setPostCount(list.length);
         // 10은 postNav의 변수와 같은값이 되야함
-        const pageNum = (parseInt(param.page, 10) - 1) * 2;
-        console.log(pageNum);
+        const pageNum = (parseInt(param.page, 10) - 1) * postCountInOnePage;
         const newList: postDataInterface[] = [];
-        for (let i = 0; i < 2; i += 1) {
+        for (let i = 0; i < postCountInOnePage; i += 1) {
           console.log(list[pageNum + i]);
           if (list[pageNum + i] === undefined) break;
           newList[i] = list[pageNum + i];

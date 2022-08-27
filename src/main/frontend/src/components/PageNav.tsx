@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 interface pageNavProp {
@@ -7,9 +8,17 @@ interface pageNavProp {
   boardType: string;
 }
 
+interface stateInterface {
+  pageNavConsts: {
+    postCountInOnePage: number;
+    pageCountInOnePage: number;
+  };
+}
+
 /**
  * @param postCount 전체 게시물 개수
  * @param currentPage 현재 페이지
+ * @param boardType 게시판 타입
  */
 function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
   const [indexArr, setArr] = useState([]);
@@ -17,35 +26,37 @@ function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
   const currentPageCount = useRef(0);
   const maxPageCount = useRef(0);
   const [pageCount, setPageCount] = useState(0);
-  /** 한 페이지에 들어있는 게시물 개수 */
-  const postCountOnePage = 2;
-  /** 한 페이지에 보여주는 페이지의 개수 */
-  const pageCountOnePage = 2;
+  const { postCountInOnePage, pageCountInOnePage } = useSelector(
+    (data: stateInterface) => {
+      return data.pageNavConsts;
+    }
+  );
 
   useEffect(() => {
+    console.log(postCountInOnePage);
     if (Number.isNaN(currentPage) || currentPage < 1) return;
     /** 전체 페이지 수 */
-    const newPageCount = Math.ceil(postCount / postCountOnePage);
+    const newPageCount = Math.ceil(postCount / postCountInOnePage);
     setPageCount(newPageCount);
     // 유효한 페이지 접근 시
     if (currentPage <= newPageCount) {
       /** 전체 페이지 수 / 한번에 보여주는 페이지 수 */
-      maxPageCount.current = Math.ceil(newPageCount / pageCountOnePage);
+      maxPageCount.current = Math.ceil(newPageCount / pageCountInOnePage);
       /** 현재 페이지 번호 / 한번에 보여주는 페이지 수 */
-      currentPageCount.current = Math.ceil(currentPage / pageCountOnePage);
+      currentPageCount.current = Math.ceil(currentPage / pageCountInOnePage);
       /** 보여줄 페이지 수 */
       const maxCount =
         // 현재가 마지막 페이지가 아니면 기본값
         // 마지막 페이지면 남은 페이지 수
         // eslint-disable-next-line no-nested-ternary
         maxPageCount.current > currentPageCount.current
-          ? pageCountOnePage
-          : newPageCount % pageCountOnePage === 0
-          ? pageCountOnePage
-          : newPageCount % pageCountOnePage;
+          ? pageCountInOnePage
+          : newPageCount % pageCountInOnePage === 0
+          ? pageCountInOnePage
+          : newPageCount % pageCountInOnePage;
       const arr = [];
       for (let i = 0; i < maxCount; i += 1) {
-        arr[i] = (currentPageCount.current - 1) * pageCountOnePage + i + 1;
+        arr[i] = (currentPageCount.current - 1) * pageCountInOnePage + i + 1;
       }
       console.log(
         postCount,
@@ -71,7 +82,7 @@ function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
     ) {
       navigator(
         `/${boardType}/${
-          (currentPageCount.current + changeNum - 1) * pageCountOnePage + 1
+          (currentPageCount.current + changeNum - 1) * pageCountInOnePage + 1
         }`
       );
     }
