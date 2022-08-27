@@ -80,9 +80,10 @@ function PageNav({ postCount, currentPage, boardType }: pageNavProp) {
       currentPageCount.current + changeNum <= maxPageCount.current &&
       currentPageCount.current + changeNum > 0
     ) {
+      const num: number = changeNum > 0 ? 1 - pageCountInOnePage : 0;
       navigator(
         `/${boardType}/${
-          (currentPageCount.current + changeNum - 1) * pageCountInOnePage + 1
+          (currentPageCount.current + changeNum) * pageCountInOnePage + num
         }`
       );
     }

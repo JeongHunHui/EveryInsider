@@ -7,9 +7,9 @@ const pageNavConsts = createSlice({
   name: 'pageNavConsts',
   initialState: {
     /** 한 페이지에 들어있는 게시물 개수 */
-    postCountInOnePage: 3,
+    postCountInOnePage: 10,
     /** 한 페이지에 보여주는 페이지의 개수 */
-    pageCountInOnePage: 2,
+    pageCountInOnePage: 5,
   },
   reducers: undefined,
 });

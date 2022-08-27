@@ -67,6 +67,8 @@ function MainPage() {
         setPostList(newList);
       })
       .catch((error) => {
+        alert('잘못된 접근입니다.');
+        navigate('/all/1');
         console.log(error);
       });
   }
