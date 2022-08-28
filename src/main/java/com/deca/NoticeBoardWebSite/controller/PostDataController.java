@@ -1,12 +1,13 @@
 package com.deca.NoticeBoardWebSite.controller;
 
-import com.deca.NoticeBoardWebSite.domain.Comment;
+import com.deca.NoticeBoardWebSite.S3Uploader;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,8 +27,9 @@ public class PostDataController {
     // Autowired: 의존성 부여
     // 스프링 컨테이너에서 postDataService 가져옴
     // -> postDataService 도 컨테이너에 등록이 되어있어야함
-    public PostDataController(PostDataService postDataService){
+    public PostDataController(PostDataService postDataService, S3Uploader s3Uploader){
         this.postDataService = postDataService;
+        this.s3Uploader = s3Uploader;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -82,35 +84,13 @@ public class PostDataController {
         return postDataService.updateViewCount(id);
     }
 
+    private final S3Uploader s3Uploader;
+
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/uploadFile")
-    // 이미지 파일 업로드, 나중에 path 만 s3버킷이랑 연동하면 될듯?
-    public String uploadFile(@RequestBody MultipartFile files){
-        // 시간과 original Filename 으로 매핑 시켜서 src 주소를 만들어 낸다.
-        Date date = new Date();
-        StringBuilder sb = new StringBuilder();
-
-        // file image 가 없을 경우
-        if (files.isEmpty()) {
-            sb.append("none");
-        } else {
-            sb.append(date.getTime());
-            sb.append(files.getOriginalFilename());
-        }
-        String path = "/Users/jeonghunhui/Documents/MyProjects/WebProject/NoticeBoardWebSite/src/main/frontend/public/testImages/" + sb.toString();
-        if (!files.isEmpty()) {
-            File dest = new File(path);
-            try {
-                files.transferTo(dest);
-                return "/testImages/" + sb.toString();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // db에 파일 위치랑 번호 등록
-        }
-        return null;
+    // 이미지 파일 업로드, s3버킷과 연동
+    public String uploadFile(@RequestBody MultipartFile files) throws IOException {
+        return s3Uploader.upload(files.getInputStream(), files.getOriginalFilename(), files.getSize());
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
