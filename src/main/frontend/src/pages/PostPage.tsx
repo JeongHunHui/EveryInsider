@@ -11,17 +11,13 @@ import CommentList from '../components/CommentList';
 
 import { postDataInterface } from './MainPage';
 
-const getPostDataURL: string = 'http://localhost:8080/api/postData/getDataById';
-const updateLikeURL: string =
-  'http://localhost:8080/api/postData/update/postLike';
-const updateDisLikeURL: string =
-  'http://localhost:8080/api/postData/update/disLike';
+const getPostDataURL: string = process.env.REACT_APP_GET_POST_API_KEY;
+const updateLikeURL: string = process.env.REACT_APP_UPDATE_LIKE_API_KEY;
+const updateDisLikeURL: string = process.env.REACT_APP_UPDATE_DISLIKE_API_KEY;
 const updateViewCountURL: string =
-  'http://localhost:8080/api/postData/update/viewCount';
-const getCountByIdURL: string =
-  'http://localhost:8080/api/comment/getCountById';
-const deletePostByIdURL: string =
-  'http://localhost:8080/api/postData/deleteById';
+  process.env.REACT_APP_UPDATE_VIEWCOUNT_API_KEY;
+const getCountByIdURL: string = process.env.REACT_APP_GET_COUNT_API_KEY;
+const deletePostByIdURL: string = process.env.REACT_APP_DELETE_POST_API_KEY;
 
 function PostPage() {
   const [commentCount, setCommentCount] = useState<number>();

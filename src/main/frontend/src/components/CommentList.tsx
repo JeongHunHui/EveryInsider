@@ -5,8 +5,7 @@ import CommentInputBox from './CommentInputBox';
 import CommentBox from './CommentBox';
 import './styles/CommentList.css';
 
-const getCommentByIdURL: string =
-  'http://localhost:8080/api/comment/getByPostId';
+const getCommentByIdURL: string = process.env.REACT_APP_GET_COMMENT_API_KEY;
 
 export interface commentInterface {
   /** 댓글 id, 생성된 순서대로 1부터 증가 */

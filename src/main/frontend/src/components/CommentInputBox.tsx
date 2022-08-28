@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import './styles/CommentInputBox.css';
 
-const commentUploadURL: string = 'http://localhost:8080/api/comment/upload';
+const commentUploadURL: string = process.env.REACT_APP_UPLOAD_COMMENT_API_KEY;
 
 interface commentProps {
   thisCommentId: number;

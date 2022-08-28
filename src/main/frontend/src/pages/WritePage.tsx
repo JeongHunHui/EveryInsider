@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import saveIcon from '../assets/images/saveIcon.png';
 import listIcon from '../assets/images/listIcon.png';
 
-const uploadPostURL: string = 'http://localhost:8080/api/postData/upload';
-const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
-const uploadImageURL: string = 'http://localhost:8080/api/postData/uploadFile';
+const uploadPostURL: string = process.env.REACT_APP_UPLOAD_POST_API_KEY;
+const getBoardTypeURL: string = process.env.REACT_APP_GET_BOARDTYPE_API_KEY;
+const uploadImageURL: string = process.env.REACT_APP_UPLOAD_IMAGE_API_KEY;
 
 function WritePage() {
   const navigate = useNavigate();
@@ -97,7 +97,6 @@ function WritePage() {
       writer: postWriter.current, // 아래 작성자 input 태그 값 가져오기
       password: postPassword.current, // 아래 비밀번호 input 태그 값 가져오기
     };
-    console.log(req);
 
     await axios
       .post(uploadPostURL, req)
@@ -139,7 +138,6 @@ function WritePage() {
 
   function passwordChange(e: { target: { value: string } }) {
     postPassword.current = e.target.value;
-    console.log(postPassword.current);
   }
 
   useEffect(() => {

@@ -37,9 +37,8 @@ interface stateInterface {
   };
 }
 
-const getBoardTypeURL: string = 'http://localhost:8080/api/postData/getTypes';
-const getPostByTypeURL: string =
-  'http://localhost:8080/api/postData/getDataByType';
+const getPostByTypeURL: string = process.env.REACT_APP_GET_POSTDATA_API_KEY;
+const getBoardTypeURL: string = process.env.REACT_APP_GET_BOARDTYPE_API_KEY;
 
 function MainPage() {
   const [postList, setPostList] = useState(Array<postDataInterface>);
@@ -62,7 +61,6 @@ function MainPage() {
         const pageNum = (parseInt(param.page, 10) - 1) * postCountInOnePage;
         const newList: postDataInterface[] = [];
         for (let i = 0; i < postCountInOnePage; i += 1) {
-          console.log(list[pageNum + i]);
           if (list[pageNum + i] === undefined) break;
           newList[i] = list[pageNum + i];
         }

@@ -10,7 +10,7 @@ interface commentBoxProps {
 }
 
 const deleteCommentByIdURL: string =
-  'http://localhost:8080/api/comment/deleteById';
+  process.env.REACT_APP_DELETE_COMMENT_API_KEY;
 
 function CommentBox({ prop, index, setIsSelect }: commentBoxProps) {
   async function deleteCommentById(inputPassword: string) {
