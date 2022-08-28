@@ -70,7 +70,7 @@ function WritePage() {
         'blockQuote',
         'insertTable',
         '|',
-        // 'imageUpload', 나중에 s3버킷 추가 후에 활성화
+        'imageUpload', // 나중에 s3버킷 추가 후에 활성화
         'undo',
         'redo',
       ],
