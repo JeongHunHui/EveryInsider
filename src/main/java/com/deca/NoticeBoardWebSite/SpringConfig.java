@@ -1,11 +1,9 @@
 package com.deca.NoticeBoardWebSite;
 
-import com.deca.NoticeBoardWebSite.repository.CommentRepository;
-import com.deca.NoticeBoardWebSite.repository.JpaCommentRepository;
-import com.deca.NoticeBoardWebSite.repository.JpaPostDataRepository;
-import com.deca.NoticeBoardWebSite.repository.PostDataRepository;
+import com.deca.NoticeBoardWebSite.repository.*;
 import com.deca.NoticeBoardWebSite.service.CommentService;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
+import com.deca.NoticeBoardWebSite.service.PostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +45,14 @@ public class SpringConfig {
     @Bean
     public CommentRepository commentRepository(){
         return new JpaCommentRepository(em);
+    }
+
+    @Bean
+    public PostImageService postImageService() { return new PostImageService(postImageRepository()); }
+
+    @Bean
+    public PostImageRepository postImageRepository(){
+        return new PostImageRepository(em);
     }
 
     @Bean

@@ -1,6 +1,5 @@
 package com.deca.NoticeBoardWebSite.repository;
 
-import com.deca.NoticeBoardWebSite.domain.Comment;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

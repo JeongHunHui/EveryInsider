@@ -3,15 +3,13 @@ package com.deca.NoticeBoardWebSite.controller;
 import com.deca.NoticeBoardWebSite.S3Uploader;
 import com.deca.NoticeBoardWebSite.domain.PostData;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
+import com.deca.NoticeBoardWebSite.service.PostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,13 +20,15 @@ import java.util.Optional;
 //
 public class PostDataController {
     private final PostDataService postDataService;
+    private final PostImageService postImageService;
 
     @Autowired
     // Autowired: 의존성 부여
     // 스프링 컨테이너에서 postDataService 가져옴
     // -> postDataService 도 컨테이너에 등록이 되어있어야함
-    public PostDataController(PostDataService postDataService, S3Uploader s3Uploader){
+    public PostDataController(PostDataService postDataService, PostImageService postImageService, S3Uploader s3Uploader){
         this.postDataService = postDataService;
+        this.postImageService = postImageService;
         this.s3Uploader = s3Uploader;
     }
 
@@ -101,6 +101,13 @@ public class PostDataController {
         boolean isPasswordCorrect = postDataService.checkPassword(findPostData, map.get("password"));
 
         if(isPasswordCorrect){
+            // s3에 저장된 이미지들 삭제
+            postImageService.getKeys(id).forEach(data->{
+                s3Uploader.delete(data);
+            });
+            // DB에 저장된 이미지 data 삭제
+            postImageService.deleteImage(id);
+            // 게시물 삭제
             postDataService.deletePost(id);
             return true;
         }
