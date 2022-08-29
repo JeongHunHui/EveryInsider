@@ -11,3 +11,11 @@ create table postData
     disLike bigint,
     primary key (id)
 );
+
+create table POST_IMAGE
+(
+    key varchar(255),
+    post_id bigint,
+    primary key (key),
+    foreign key (post_id) references post_data (id) on delete cascade
+);

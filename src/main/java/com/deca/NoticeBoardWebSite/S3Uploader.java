@@ -2,7 +2,9 @@ package com.deca.NoticeBoardWebSite;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.deca.NoticeBoardWebSite.domain.PostImage;
 import com.deca.NoticeBoardWebSite.repository.PostImageRepository;
+import com.deca.NoticeBoardWebSite.service.PostImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,14 @@ public class S3Uploader {
 
     private final AmazonS3Client s3Client;
 
+    private final PostImageService postImageService;
 
-
-    public String upload(InputStream inputStream, String originFileName, long fileSize) {
+    public String upload(InputStream inputStream, String originFileName, long fileSize, Long postId) {
         String s3FileName = UUID.randomUUID() + "-" + originFileName;
 
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(fileSize);
+        // postImageService.save(new PostImage(s3FileName, postId));
 
         s3Client.putObject(bucket, s3FileName, inputStream, objMeta);
 

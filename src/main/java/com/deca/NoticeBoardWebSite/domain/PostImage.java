@@ -10,6 +10,7 @@ import javax.persistence.*;
 // getter, setter 추가, 문자열로 자동변환
 public class PostImage {
     @Id
+    @Column(name = "imageKey")
     /** 이미지 이름 */
     private String key;
 

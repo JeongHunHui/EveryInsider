@@ -2,6 +2,7 @@ package com.deca.NoticeBoardWebSite.controller;
 
 import com.deca.NoticeBoardWebSite.S3Uploader;
 import com.deca.NoticeBoardWebSite.domain.PostData;
+import com.deca.NoticeBoardWebSite.domain.PostImage;
 import com.deca.NoticeBoardWebSite.service.PostDataService;
 import com.deca.NoticeBoardWebSite.service.PostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class PostDataController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/upload")
     public String savePostData(@RequestBody PostData postData){
+        // 저장한 이미지들의 postId를 생성된 id로 변경 하기(나중에 ㄱ)
         postDataService.uploadPost(postData);
         return "success";
     }
@@ -90,7 +92,7 @@ public class PostDataController {
     @PostMapping("/uploadFile")
     // 이미지 파일 업로드, s3버킷과 연동
     public String uploadFile(@RequestBody MultipartFile files) throws IOException {
-        return s3Uploader.upload(files.getInputStream(), files.getOriginalFilename(), files.getSize());
+        return s3Uploader.upload(files.getInputStream(), files.getOriginalFilename(), files.getSize(), 0L);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -101,12 +103,12 @@ public class PostDataController {
         boolean isPasswordCorrect = postDataService.checkPassword(findPostData, map.get("password"));
 
         if(isPasswordCorrect){
-            // s3에 저장된 이미지들 삭제
-            postImageService.getKeys(id).forEach(data->{
-                s3Uploader.delete(data);
-            });
-            // DB에 저장된 이미지 data 삭제
-            postImageService.deleteImage(id);
+//            // s3에 저장된 이미지들 삭제
+//            postImageService.getKeys(id).forEach(data->{
+//                s3Uploader.delete(data);
+//            });
+//            // DB에 저장된 이미지 data 삭제
+//            postImageService.deleteImage(id);
             // 게시물 삭제
             postDataService.deletePost(id);
             return true;
