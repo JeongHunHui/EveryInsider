@@ -82,12 +82,40 @@ function WritePage() {
 
   // 작성한 게시물을 백엔드에 저장하고 메인페이지로 이동
   async function savePostData() {
+    if (postTitle.current.length <= 0) {
+      alert('제목을 입력해주세요!');
+      return;
+    }
+    if (postContent.current.length <= 0) {
+      alert('내용을 입력해주세요!');
+      return;
+    }
+    if (postWriter.current.length <= 0) {
+      alert('작성자 이름을 입력해주세요!');
+      return;
+    }
+    if (postPassword.current.length <= 0) {
+      alert('비밀번호를 입력해주세요!');
+      return;
+    }
     if (postTitle.current.length > 50) {
       alert('제목의 길이를 초과했습니다!');
       return;
     }
     if (postContent.current.length > 100000) {
       alert('게시물의 용량을 초과했습니다!');
+      return;
+    }
+    if (postWriter.current.length > 50) {
+      alert(
+        `작성자 이름 길이를 초과했습니다! (${postWriter.current.length}/50)`
+      );
+      return;
+    }
+    if (postPassword.current.length > 50) {
+      alert(
+        `비밀번호 길이를 초과했습니다! (${postPassword.current.length}/50)`
+      );
       return;
     }
     const req = {
@@ -137,6 +165,9 @@ function WritePage() {
   }
 
   function passwordChange(e: { target: { value: string } }) {
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    if (korean.test(e.target.value)) e.target.value = postPassword.current;
+    else postPassword.current = e.target.value;
     postPassword.current = e.target.value;
   }
 
