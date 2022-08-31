@@ -99,7 +99,7 @@ function WritePage() {
       return;
     }
     if (postTitle.current.length > 50) {
-      alert('제목의 길이를 초과했습니다!');
+      alert(`제목의 길이를 초과했습니다!${postTitle.current.length}/50`);
       return;
     }
     if (postContent.current.length > 100000) {

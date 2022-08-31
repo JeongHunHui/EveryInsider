@@ -34,6 +34,37 @@ function CommentInputBox({ thisCommentId }: commentProps) {
   // 게시물 Id로 해당 게시물의 댓글들을 가져온다
   async function uploadComment() {
     const newId: any = id;
+    if (commentName.current.length <= 0) {
+      alert('작성자 이름을 입력해주세요!');
+      return;
+    }
+    if (commentContent.current.length <= 0) {
+      alert('댓글 내용을 입력해주세요!');
+      return;
+    }
+    if (commentPassword.current.length <= 0) {
+      alert('댓글 비밀번호를 입력해주세요!');
+      return;
+    }
+
+    if (commentName.current.length > 50) {
+      alert(
+        `작성자 이름 길이를 초과했습니다! (${commentName.current.length}/50)`
+      );
+      return;
+    }
+    if (commentContent.current.length > 1000) {
+      alert(
+        `댓글 내용 길이를 초과했습니다! (${commentContent.current.length}/1000)`
+      );
+      return;
+    }
+    if (commentPassword.current.length > 50) {
+      alert(
+        `댓글 비밀번호 길이를 초과했습니다! (${commentPassword.current.length}/50)`
+      );
+      return;
+    }
     const req: reqInterface = {
       postId: parseInt(newId, 10),
       commentId: thisCommentId,
