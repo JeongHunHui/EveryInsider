@@ -1,0 +1,11 @@
+# vi dockerignore
+
+npn-debug.log
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+.vscode
+
+# 그 외 추가할 사항등 입력 후 :wq
