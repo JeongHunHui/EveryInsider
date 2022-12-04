@@ -19,7 +19,6 @@ class MemoryPostDataRepositoryTest {
         System.out.println("----- clear store -----");
     }
 
-    /*
     @Test
     public void save(){
         PostData postData = new PostData();
@@ -51,5 +50,4 @@ class MemoryPostDataRepositoryTest {
             System.out.println(data.getId());
         }
     }
-    */
 }
